@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
-import { currentDay, doorState } from '../src/domain/calendar.js';
+import { adventYear, currentDay, doorState } from '../src/domain/calendar.js';
 
 const on = (month, day) => new Date(2026, month, day, 12);
 
@@ -30,4 +30,9 @@ describe('doorState', () => {
   test('a future door opened without the lock stays open', () => {
     assert.equal(doorState(20, { ...strict, opened: [20], unlocked: true }), 'open');
   });
+});
+
+describe('adventYear', () => {
+  test('is this year until the end of December', () => assert.equal(adventYear(on(10, 24)), 2026));
+  test('is last year in January', () => assert.equal(adventYear(on(0, 5)), 2025));
 });
