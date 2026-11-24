@@ -51,6 +51,7 @@ function paintFlake(ctx, f, t) {
 export default {
   id: 'kawaii',
   fonts: ['Fredoka', 'Nunito'],
+  color: '#fff3f8',
   icon: (day) => ICONS[day % ICONS.length],
   swatch: ICONS[3],
   hero,
