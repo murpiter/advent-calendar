@@ -38,8 +38,10 @@ const theme = () => themeById(state.theme);
 const calendarName = () => state.title || strings.themes[state.theme].title;
 const doors = () => ({ today: today(), opened: state.opened, unlocked: state.unlocked });
 
+const subtitle = (id, days) => (strings.themes[id].subtitle ?? strings.subtitle)(days);
+
 function heroLines() {
-  const lines = [strings.subtitle(state.days)];
+  const lines = [subtitle(state.theme, state.days)];
   if (state.gift?.from) lines.push(strings.giftByline(state.gift.from));
   return lines;
 }
@@ -254,7 +256,7 @@ async function receiveGift() {
   }
   const look = themeById(gift.theme);
   const replacing = Boolean(state.gift) || !isExample(state, strings);
-  paintTheme(look, gift.title || strings.themes[look.id].title, [strings.subtitle(gift.days)]);
+  paintTheme(look, gift.title || strings.themes[look.id].title, [subtitle(look.id, gift.days)]);
   const { open, later } = renderEnvelope({ gift, theme: look, strings, replacing });
   open.addEventListener('click', () => acceptGift(gift, token));
   later.addEventListener('click', () => {

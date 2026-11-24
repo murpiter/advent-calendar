@@ -1,6 +1,7 @@
 const rules = new Intl.PluralRules('ru');
 const plural = (n, forms) => `${n} ${forms[rules.select(n)] ?? forms.many}`;
 const DOORS = { one: 'дверца', few: 'дверцы', many: 'дверец' };
+const SWEET_DAYS = { one: 'сладкий день', few: 'сладких дня', many: 'сладких дней' };
 
 export default {
   lang: 'ru',
@@ -72,6 +73,10 @@ export default {
     kawaii: { name: 'Кавай', sub: 'Год Козы, пастель и снежок', title: 'Снежная коза', ok: 'Ура!' },
     palace: { name: 'Дворцовый', sub: 'Синий и золото, вензеля', title: 'Золотой зал', ok: 'С благодарностью' },
     forest: { name: 'Северный лес', sub: 'Горы, ёлки и сияние', title: 'Ночной лес', ok: 'Принято' },
+    gingerbread: {
+      name: 'Пряничный домик', sub: 'Глазурь, леденцы и печенье', title: 'Сладкий календарь', ok: 'Вкусно!',
+      subtitle: (days) => `${plural(days, SWEET_DAYS)} до праздника`,
+    },
     mezen: { name: 'Мезенская роспись', sub: 'Кони, птицы и солнце', title: 'Расписная прялка', ok: 'Любо!' },
   },
   exampleTitle: 'Адвент-календарь уборки',

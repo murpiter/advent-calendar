@@ -70,6 +70,10 @@ export default {
     kawaii: { name: 'Kawaii', sub: 'Year of the Goat, pastels and snow', title: 'Snowy goat', ok: 'Yay!' },
     palace: { name: 'Palace', sub: 'Royal blue, gold and monograms', title: 'Golden hall', ok: 'With gratitude' },
     forest: { name: 'Northern forest', sub: 'Mountains, pines and aurora', title: 'Night forest', ok: 'Got it' },
+    gingerbread: {
+      name: 'Gingerbread house', sub: 'Icing, candy canes and cookies', title: 'Sweet calendar', ok: 'Yum!',
+      subtitle: (days) => `${days} sweet ${days === 1 ? 'day' : 'days'} until the holidays`,
+    },
     mezen: { name: 'Mezen painting', sub: 'Horses, birds and suns', title: 'Painted spinning wheel', ok: 'Lovely!' },
   },
   exampleTitle: 'Cleaning advent calendar',
