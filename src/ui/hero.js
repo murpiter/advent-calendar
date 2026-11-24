@@ -9,9 +9,9 @@ function renderCorners(theme) {
   for (const position of CORNERS) frame.prepend(trustedSvg(`corner ${position}`, theme.corner));
 }
 
-export function renderHero(theme, title, subtitle) {
-  const hero = trustedSvg('', theme.hero());
-  hero.firstElementChild.classList.add('hero-svg');
-  $('hero').replaceChildren(hero.firstElementChild, el('h1', '', title), el('p', '', subtitle));
+export function renderHero(theme, title, lines) {
+  const art = trustedSvg('', theme.hero()).firstElementChild;
+  art.classList.add('hero-svg');
+  $('hero').replaceChildren(art, el('h1', '', title), ...lines.map((line) => el('p', '', line)));
   renderCorners(theme);
 }
