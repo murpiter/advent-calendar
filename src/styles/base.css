@@ -41,6 +41,8 @@ button { font: inherit; color: inherit; cursor: pointer }
 .corner.bl { bottom: -6px; left: -6px; transform: scaleY(-1) }
 .corner.br { bottom: -6px; right: -6px; transform: scale(-1, -1) }
 .grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(6px, 1.8vw, 14px) }
+.grid[data-days="24"], .grid[data-days="31"] { grid-template-columns: repeat(4, minmax(0, 1fr)) }
+.grid[data-days="31"] .cell:last-child { grid-column: span 2; aspect-ratio: auto }
 .cell {
   position: relative; aspect-ratio: 1/1.08; display: flex; align-items: center; justify-content: center; flex-direction: column;
   padding: 0; border: 0; background: var(--card); overflow: hidden;
@@ -86,6 +88,15 @@ button { font: inherit; color: inherit; cursor: pointer }
 .field span { display: block; font-weight: 600; margin-bottom: 4px; font-size: 14px }
 input[type=text], textarea { width: 100%; font: inherit; color: var(--ink); background: var(--bg); border: 2px solid color-mix(in srgb, var(--accent) 55%, transparent); border-radius: 12px; padding: 10px 12px }
 textarea { min-height: 240px; resize: vertical; line-height: 1.5 }
+.days { border: 0; padding: 0; margin-inline: 0 }
+.days legend { font-weight: 600; margin-bottom: 4px; font-size: 14px; padding: 0 }
+.segmented { display: flex; gap: 8px }
+.seg input { position: absolute; opacity: 0; pointer-events: none }
+.seg span { display: block; min-width: 56px; padding: 8px 14px; text-align: center; font-weight: 600; border: 2px solid color-mix(in srgb, var(--accent) 55%, transparent); border-radius: 12px; cursor: pointer }
+.seg input:checked + span { background: var(--accent); border-color: var(--accent); color: var(--bg) }
+.seg input:focus-visible + span { outline: 3px solid var(--accent2); outline-offset: 2px }
+.check { display: flex; gap: 10px; align-items: flex-start; margin-top: 10px; font-size: 15px; cursor: pointer }
+.check input { width: 20px; height: 20px; margin: 1px 0 0; flex: none; accent-color: var(--accent) }
 .count { font-size: 14px; color: var(--muted); margin-top: 6px }
 .count.bad { color: var(--danger); font-weight: 600 }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px }

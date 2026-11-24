@@ -1,4 +1,8 @@
-export const DAYS = 25;
+export const DAY_OPTIONS = [24, 25, 31];
+export const DEFAULT_DAYS = 25;
+
+const DECEMBER = 11;
+const JANUARY = 0;
 
 export function shuffle(items, random = Math.random) {
   const result = items.slice();
@@ -9,10 +13,12 @@ export function shuffle(items, random = Math.random) {
   return result;
 }
 
-export function currentDay(date, days = DAYS) {
-  return date.getMonth() === 11 ? Math.min(date.getDate(), days) : 0;
+export function currentDay(date, days) {
+  if (date.getMonth() === DECEMBER) return Math.min(date.getDate(), days);
+  return date.getMonth() === JANUARY ? days : 0;
 }
 
-export const isLocked = (day, today) => day > today;
-
-export const isOpen = (day, today, opened) => day < today || opened.includes(day);
+export function doorState(day, { today, opened, unlocked }) {
+  if (day < today || opened.includes(day)) return 'open';
+  return day > today && !unlocked ? 'locked' : 'ready';
+}

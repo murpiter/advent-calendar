@@ -1,46 +1,40 @@
-import { DAYS, currentDay, isLocked, isOpen, shuffle } from './domain/calendar.js';
+import { currentDay, doorState, shuffle } from './domain/calendar.js';
 import strings from './i18n/ru.js';
-import { loadState, persist } from './state.js';
+import { exampleItems, loadState, persist } from './state.js';
 import { themeById } from './themes/index.js';
 import { $ } from './ui/dom.js';
 import { openDoor } from './ui/door.js';
 import { renderGrid, shake } from './ui/grid.js';
 import { renderHero } from './ui/hero.js';
-import { fillForm, parseItems, renderCount, renderThemes, validateItems } from './ui/setup.js';
+import { fillForm, parseItems, renderCount, renderSetupForm, renderThemes, selectedDays, validateItems } from './ui/setup.js';
 import { createSnow } from './ui/snow.js';
 import { toast } from './ui/toast.js';
 
 const state = loadState(strings);
 const snow = createSnow($('snow'));
 
-const today = () => (state.demo ? state.demoDay : currentDay(new Date()));
+const today = () => (state.demo ? state.demoDay : currentDay(new Date(), state.days));
 const theme = () => themeById(state.theme);
+const doors = () => ({ today: today(), opened: state.opened, unlocked: state.unlocked });
 
 function applyTheme() {
   document.body.className = `t-${state.theme}`;
-  renderHero(theme(), state.title || strings.themes[state.theme].title, strings.subtitle(DAYS));
+  renderHero(theme(), state.title || strings.themes[state.theme].title, strings.subtitle(state.days));
   snow.setTheme(theme());
 }
 
 function renderCalendar() {
-  const day = today();
-  renderGrid({ days: DAYS, today: day, opened: state.opened, theme: theme(), strings });
-  $('dayLabel').textContent = state.demo ? strings.demoToday(day) : strings.today(day);
-  $('modeBtn').textContent = state.demo ? strings.realDate : strings.demoMode;
-  $('dayMinus').hidden = $('dayPlus').hidden = !state.demo;
-}
-
-function renderSetup() {
-  renderThemes(state.theme, strings);
-  fillForm(state);
-  renderCount(DAYS, strings);
+  renderGrid({ days: state.days, doors: doors(), today: today(), theme: theme(), strings });
+  $('dayLabel').textContent = state.demo ? strings.demoToday(today()) : strings.today(today());
+  for (const id of ['dayMinus', 'dayPlus', 'exitDemo']) $(id).hidden = !state.demo;
 }
 
 function renderStaticText() {
   const labels = {
-    toSetup: strings.setup, reshuffle: strings.reshuffle, styleHeading: strings.styleHeading,
-    itemsHeading: strings.itemsHeading(DAYS), titleLabel: strings.titleLabel, itemsLabel: strings.itemsLabel,
+    toSetup: strings.setup, reshuffle: strings.reshuffle, exitDemo: strings.exitDemo, styleHeading: strings.styleHeading,
+    itemsHeading: strings.itemsHeading, titleLabel: strings.titleLabel, daysLabel: strings.daysLabel, itemsLabel: strings.itemsLabel,
     build: strings.build, example: strings.example, back: strings.back,
+    doorsHeading: strings.doorsHeading, unlockLabel: strings.unlockLabel, demoLabel: strings.demoLabel,
   };
   for (const [id, text] of Object.entries(labels)) $(id).textContent = text;
   $('dayMinus').setAttribute('aria-label', strings.prevDay);
@@ -57,23 +51,28 @@ function onDoorClick(event) {
   const cell = event.target.closest('.cell');
   if (!cell) return;
   const day = Number(cell.dataset.day);
-  if (isLocked(day, today())) {
+  const door = doorState(day, doors());
+  if (door === 'locked') {
     shake(cell);
     toast(strings.lockedToast(day));
     return;
   }
-  const fresh = !isOpen(day, today(), state.opened);
-  if (fresh) {
+  if (door === 'ready') {
     state.opened.push(day);
     persist(state);
     renderCalendar();
   }
   const returnFocus = $('grid').querySelector(`[data-day="${day}"]`);
-  openDoor({ day, text: state.assign[day - 1], theme: theme(), strings, fresh, returnFocus });
+  openDoor({ day, text: state.assign[day - 1], theme: theme(), strings, fresh: door === 'ready', returnFocus });
+}
+
+function setDemo(on) {
+  state.demo = on;
+  renderCalendar();
 }
 
 function shiftDemoDay(delta) {
-  state.demoDay = Math.min(DAYS, Math.max(0, state.demoDay + delta));
+  state.demoDay = Math.min(state.days, Math.max(0, state.demoDay + delta));
   renderCalendar();
 }
 
@@ -88,11 +87,13 @@ function onThemePick(event) {
 }
 
 function onBuild() {
+  const days = selectedDays();
   const items = parseItems($('itemsIn').value);
-  const error = validateItems(items, DAYS, strings);
+  const error = validateItems(items, days, strings);
   $('err').textContent = error;
   if (error) return;
   Object.assign(state, {
+    days,
     items,
     title: $('titleIn').value.trim() || strings.themes[state.theme].title,
     assign: shuffle(items),
@@ -112,31 +113,38 @@ function onReshuffle() {
   toast(strings.reshuffled);
 }
 
-function onExample() {
-  fillForm({ title: strings.exampleTitle, items: strings.exampleItems });
-  renderCount(DAYS, strings);
+function onFormChange() {
+  renderCount(strings);
   $('err').textContent = '';
+}
+
+function onExample() {
+  fillForm({ title: strings.exampleTitle, items: exampleItems(strings, selectedDays()) });
+  onFormChange();
+}
+
+function onUnlockChange() {
+  state.unlocked = $('unlockIn').checked;
+  persist(state);
+  renderCalendar();
 }
 
 function bindEvents() {
   $('grid').addEventListener('click', onDoorClick);
   $('dayMinus').addEventListener('click', () => shiftDemoDay(-1));
   $('dayPlus').addEventListener('click', () => shiftDemoDay(1));
-  $('modeBtn').addEventListener('click', () => {
-    state.demo = !state.demo;
-    renderCalendar();
-  });
+  $('exitDemo').addEventListener('click', () => setDemo(false));
   $('toSetup').addEventListener('click', () => {
-    renderSetup();
+    renderSetupForm(state, strings);
     show('setup');
   });
   $('reshuffle').addEventListener('click', onReshuffle);
   $('themes').addEventListener('click', onThemePick);
-  $('itemsIn').addEventListener('input', () => {
-    renderCount(DAYS, strings);
-    $('err').textContent = '';
-  });
+  $('itemsIn').addEventListener('input', onFormChange);
+  $('daysIn').addEventListener('change', onFormChange);
   $('example').addEventListener('click', onExample);
+  $('unlockIn').addEventListener('change', onUnlockChange);
+  $('demoIn').addEventListener('change', () => setDemo($('demoIn').checked));
   $('back').addEventListener('click', () => show('cal'));
   $('build').addEventListener('click', onBuild);
 }
