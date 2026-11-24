@@ -1,9 +1,92 @@
-body.t-kawaii .cell { --c: #ffc2d9; border-radius: 24px; border: 3px solid var(--c); box-shadow: 0 6px 0 color-mix(in srgb, var(--c) 70%, #fff), 0 10px 18px rgba(255, 143, 184, .18) }
-body.t-kawaii .cell:nth-child(4n+2) { --c: #cfc3ff }
-body.t-kawaii .cell:nth-child(4n+3) { --c: #bff0df }
-body.t-kawaii .cell:nth-child(4n+4) { --c: #ffdcb8 }
-body.t-kawaii .cell .num { color: color-mix(in srgb, var(--c) 45%, #6b4a63) }
-body.t-kawaii .cell.open { background: color-mix(in srgb, var(--c) 22%, #fff) }
-body.t-kawaii .mcard { border-radius: 32px; border: 4px solid #ffc2d9; box-shadow: 0 14px 0 #ffd9e8, 0 24px 40px rgba(255, 143, 184, .3); animation: pop .6s cubic-bezier(.34, 1.56, .64, 1) }
-@keyframes pop { from { transform: scale(.5) rotate(-6deg); opacity: 0 } to { transform: none; opacity: 1 } }
+body.t-kawaii {
+  --font-display: 'Fredoka', 'Nunito', system-ui, sans-serif;
+  background: radial-gradient(60% 40% at 15% 10%, #ffe1ef 0, transparent 70%), radial-gradient(50% 40% at 90% 30%, #e6defe 0, transparent 70%),
+    linear-gradient(180deg, #fff4fa, #fdf0ff 60%, #f0fbf6) fixed;
+}
+body.t-kawaii .hero-svg { max-width: none; border-radius: 36px; box-shadow: 0 12px 0 #ffe0ec, 0 26px 50px rgba(255, 140, 190, .28) }
+body.t-kawaii .hero h1 {
+  margin-top: 20px; font-weight: 900; color: #ff7fae;
+  text-shadow: 0 3px 0 #fff, 0 6px 0 #ffd1e3, 0 0 30px rgba(255, 156, 194, .6); animation: kawaii-bob 3s ease-in-out infinite;
+}
+@keyframes kawaii-bob { 50% { transform: translateY(-4px) } }
+body.t-kawaii .hero p { font-weight: 700; color: #a684a0 }
+body.t-kawaii .btn { border-radius: 999px; font-weight: 800 }
+
+body.t-kawaii .blink { transform-box: fill-box; transform-origin: center; animation: kawaii-blink 4.5s infinite }
+@keyframes kawaii-blink { 0%, 92%, 100% { transform: none } 95% { transform: scaleY(.1) } }
+body.t-kawaii .ear { transform-box: fill-box; animation: kawaii-ear-l 3.6s ease-in-out infinite }
+body.t-kawaii .ear.l { transform-origin: 100% 40% }
+body.t-kawaii .ear.r { transform-origin: 0 40%; animation-name: kawaii-ear-r; animation-delay: -1.8s }
+@keyframes kawaii-ear-l { 0%, 70%, 100% { transform: none } 80% { transform: rotate(-14deg) } 90% { transform: rotate(6deg) } }
+@keyframes kawaii-ear-r { 0%, 70%, 100% { transform: none } 80% { transform: rotate(14deg) } 90% { transform: rotate(-6deg) } }
+body.t-kawaii .pom { transform-box: fill-box; transform-origin: 50% 100%; animation: kawaii-pom 2.2s ease-in-out infinite }
+@keyframes kawaii-pom { 0%, 100% { transform: rotate(-8deg) } 50% { transform: rotate(10deg) translateY(-2px) } }
+body.t-kawaii .tail { transform-box: fill-box; transform-origin: 0 100%; animation: kawaii-wag .5s ease-in-out infinite alternate }
+@keyframes kawaii-wag { to { transform: rotate(22deg) } }
+body.t-kawaii .scarf-end { transform-box: fill-box; transform-origin: 50% 0; animation: kawaii-sway 2.8s ease-in-out infinite alternate }
+@keyframes kawaii-sway { from { transform: rotate(-6deg) } to { transform: rotate(8deg) } }
+body.t-kawaii .bell { transform-box: fill-box; transform-origin: 50% 0; animation: kawaii-ring 1.8s ease-in-out infinite }
+@keyframes kawaii-ring { 0%, 70%, 100% { transform: none } 78% { transform: rotate(16deg) } 86% { transform: rotate(-12deg) } 94% { transform: rotate(5deg) } }
+body.t-kawaii .bulb { animation: kawaii-glow 2s ease-in-out infinite }
+body.t-kawaii .bulb:nth-child(3n) { animation-delay: -.7s }
+body.t-kawaii .bulb:nth-child(3n + 1) { animation-delay: -1.4s }
+@keyframes kawaii-glow { 50% { opacity: .35 } }
+body.t-kawaii .star { transform-box: fill-box; transform-origin: center; animation: kawaii-float 3s ease-in-out infinite }
+@keyframes kawaii-float { 50% { transform: translateY(-6px) rotate(12deg) } }
+body.t-kawaii .tw { transform-box: fill-box; transform-origin: center; animation: kawaii-twinkle 2.4s ease-in-out infinite }
+body.t-kawaii .tw:nth-of-type(2n) { animation-delay: -1.2s }
+@keyframes kawaii-twinkle { 50% { transform: scale(.3); opacity: .3 } }
+
+body.t-kawaii .cell {
+  --c: #ffc2d9; --d: #ff9cc2; overflow: visible; perspective: 700px; border: 0; border-radius: 26px;
+  background: color-mix(in srgb, var(--c) 24%, #fff); box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--c) 60%, #fff);
+}
+body.t-kawaii .cell:nth-child(4n + 2) { --c: #d8ccff; --d: #a998f5 }
+body.t-kawaii .cell:nth-child(4n + 3) { --c: #bff0df; --d: #6fd0ad }
+body.t-kawaii .cell:nth-child(4n + 4) { --c: #ffdcb8; --d: #f5ac6a }
+body.t-kawaii .cell .num { color: var(--d); font-weight: 900 }
+body.t-kawaii .cell .ico { width: 62% }
+body.t-kawaii .cell.open .ico svg { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--d) 70%, transparent)); animation: kawaii-wiggle 2.4s ease-in-out infinite }
+@keyframes kawaii-wiggle { 0%, 100% { transform: rotate(-5deg) } 50% { transform: rotate(5deg) scale(1.06) } }
+body.t-kawaii .leaf {
+  position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; border-radius: 26px; transform-origin: 50% 0;
+  background: radial-gradient(120% 80% at 30% 15%, #fff 0, transparent 45%), linear-gradient(170deg, color-mix(in srgb, var(--c) 70%, #fff), var(--c));
+  box-shadow: 0 6px 0 color-mix(in srgb, var(--d) 55%, #fff), 0 12px 20px color-mix(in srgb, var(--d) 30%, transparent),
+    inset 0 -6px 0 color-mix(in srgb, var(--d) 25%, transparent), inset 0 0 0 3px rgba(255, 255, 255, .7);
+}
+body.t-kawaii .leaf-pic { width: 66%; margin-top: 10% }
+body.t-kawaii .leaf-pic svg { display: block; width: 100%; transition: transform .3s }
+body.t-kawaii .cell:not(.locked):hover { transform: none }
+body.t-kawaii .cell:not(.locked):hover .leaf-pic svg { transform: scale(1.08) rotate(-4deg) }
+body.t-kawaii .leaf-num {
+  position: absolute; top: -8px; right: -6px; min-width: 30px; height: 30px; padding: 0 6px; border-radius: 15px; display: grid; place-items: center;
+  background: #fff; color: var(--d); font-family: var(--font-body); font-weight: 900; font-size: 16px; box-shadow: 0 3px 0 color-mix(in srgb, var(--d) 45%, #fff);
+}
+body.t-kawaii .cell.open .leaf { visibility: hidden }
+body.t-kawaii .cell.opening .leaf { visibility: visible; animation: kawaii-lid .8s ease-in-out forwards }
+@keyframes kawaii-lid { 0% { transform: none } 25% { transform: scale(1.08, .9); opacity: 1 } 70% { transform: rotateX(80deg); opacity: 1 } 100% { transform: rotateX(115deg) translateY(-10px); opacity: 0 } }
+body.t-kawaii .cell.locked { opacity: 1 }
+body.t-kawaii .cell.locked .leaf { filter: saturate(.55) brightness(1.04) }
+body.t-kawaii .cell.locked .leaf::after {
+  content: 'z'; position: absolute; top: 14%; left: 18%; font-weight: 900; font-size: 15px; color: #b8a7c9; animation: kawaii-zzz 3s ease-in infinite;
+}
+body.t-kawaii .cell.locked:nth-child(even) .leaf::after { animation-delay: -1.5s }
+@keyframes kawaii-zzz { 0% { opacity: 0; transform: translate(0, 6px) scale(.6) } 30% { opacity: 1 } 100% { opacity: 0; transform: translate(-8px, -20px) scale(1.3) } }
+@property --kawaii-turn { syntax: '<angle>'; inherits: false; initial-value: 0deg }
+body.t-kawaii .cell.today { animation: none }
+body.t-kawaii .cell.today::before {
+  content: ''; position: absolute; inset: -9px; border-radius: 34px; z-index: 0; filter: blur(7px) saturate(1.6);
+  background: conic-gradient(from var(--kawaii-turn), #ff9cc2, #ffe9a8, #bff0df, #d8ccff, #ff9cc2); animation: kawaii-halo 3s linear infinite;
+}
+@keyframes kawaii-halo { to { --kawaii-turn: 360deg } }
+body.t-kawaii .cell.today .leaf { animation: kawaii-hop 1.6s ease-in-out infinite }
+@keyframes kawaii-hop { 0%, 60%, 100% { transform: none } 70% { transform: translateY(-6px) scale(1.03, .97) } 80% { transform: scale(1.04, .94) } 90% { transform: scale(.98, 1.02) } }
+
+body.t-kawaii .mcard { border-radius: 32px; border: 4px solid #ffc2d9; box-shadow: 0 14px 0 #ffd9e8, 0 24px 40px rgba(255, 143, 184, .3), 0 0 40px rgba(255, 233, 168, .5); animation: kawaii-pop .6s cubic-bezier(.34, 1.56, .64, 1) }
+@keyframes kawaii-pop { from { transform: scale(.5) rotate(-6deg); opacity: 0 } to { transform: none; opacity: 1 } }
+body.t-kawaii .mcard .big { animation: kawaii-wiggle 2.4s ease-in-out infinite }
 .tcard.t-kawaii .sw { background: linear-gradient(135deg, #ffe3ef, #e8e0ff) }
+
+@media (max-width: 520px) {
+  body.t-kawaii .leaf-num { min-width: 24px; height: 24px; font-size: 13px; top: -6px; right: -4px }
+}
