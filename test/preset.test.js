@@ -29,6 +29,8 @@ describe('saved file data', () => {
     'an order that is not the same list': serializePreset({ ...preset, assign: [...items.slice(1), 'другое'] }),
     'a wrong day count': serializePreset({ ...preset, days: 30 }),
     'a strange id': serializePreset({ ...preset, id: '../../etc' }),
+    'an item made only of invisible characters': serializePreset({ ...preset, items: ['\u200B', ...items.slice(1)], assign: [...items.slice(1), '\u200B'] }),
+    'a gift token with markup': serializePreset({ ...preset, gift: { from: 'Алиса', token: '1"><img src=x>' } }),
   };
   for (const [name, text] of Object.entries(broken)) {
     test(`rejects ${name}`, () => assert.equal(parsePreset(text), null));
@@ -41,4 +43,9 @@ describe('file name', () => {
   });
 
   test('falls back when nothing is left', () => assert.equal(fileName('///'), 'advent-calendar.html'));
+
+  test('cannot be reversed by direction marks or cut inside a character', () => {
+    assert.equal(fileName('Подарок\u202Elmth.exe'), 'Подарокlmth.exe.html');
+    assert.doesNotMatch(fileName('🎄'.repeat(40)), /\p{Cs}/u);
+  });
 });

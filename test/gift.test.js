@@ -35,6 +35,7 @@ describe('gift link', async () => {
     'items that do not match the day count': await tokenOf({ ...gift, items: gift.items.slice(1) }),
     'an item that is not text': await tokenOf({ ...gift, items: [42, ...gift.items.slice(1)] }),
     'an empty item': await tokenOf({ ...gift, items: ['', ...gift.items.slice(1)] }),
+    'an item made only of invisible characters': await tokenOf({ ...gift, items: ['\u200B\u202E', ...gift.items.slice(1)] }),
     'a very long note': await tokenOf({ ...gift, note: 'a'.repeat(5000) }),
     'a theme name with markup': await tokenOf({ ...gift, theme: '"><script>' }),
     'a link longer than any real gift': `1${'A'.repeat(20000)}`,
