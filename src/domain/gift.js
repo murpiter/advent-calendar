@@ -6,7 +6,7 @@ const MAX_UNPACKED_BYTES = 64 * 1024;
 const LIMITS = { title: 60, item: 200, from: 60, note: 400 };
 const TOKEN_PATTERN = /^[A-Za-z0-9_-]+$/;
 const THEME_PATTERN = /^[a-z]{1,20}$/;
-const INVISIBLE = /[\u0000-\u0009\u000B-\u001F\u007F​-‏‪-‮⁦-⁩]/g;
+const INVISIBLE = /[\u0000-\u0009\u000B-\u001F\u007F\u200B-\u200F\u202A-\u202E\u2066-\u2069]/g;
 
 const clean = (text) => text.replace(INVISIBLE, '');
 const isText = (value, max) => typeof value === 'string' && value.length <= max;

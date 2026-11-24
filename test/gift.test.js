@@ -45,7 +45,7 @@ describe('gift link', async () => {
   }
 
   test('drops invisible control characters', async () => {
-    const decoded = await decodeGift(await tokenOf({ ...gift, from: 'Ал‮иса\u0007' }));
+    const decoded = await decodeGift(await tokenOf({ ...gift, from: 'Ал\u202Eиса\u0007' }));
     assert.equal(decoded.from, 'Алиса');
   });
 });
