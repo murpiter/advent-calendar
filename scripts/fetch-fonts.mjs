@@ -5,8 +5,7 @@ const FAMILIES = {
   Nunito: { weights: [400, 600, 700], repo: 'nunito' },
   'Cormorant Garamond': { weights: [500, 600, 700], repo: 'cormorantgaramond' },
   'Playfair Display': { weights: [500, 700], repo: 'playfairdisplay' },
-  Oswald: { weights: [400, 500, 600], repo: 'oswald' },
-  Barlow: { weights: [400, 500, 600], repo: 'barlow' },
+  Oswald: { weights: [300, 400, 500, 600], repo: 'oswald' },
 };
 const SUBSETS = ['cyrillic', 'latin'];
 const BROWSER = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36';
