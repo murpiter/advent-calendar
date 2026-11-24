@@ -86,6 +86,7 @@ body.t-mezen .mcard { border-radius: 4px; background: var(--board); box-shadow: 
 @keyframes mezen-unfold { from { transform: perspective(900px) rotateY(-70deg); opacity: 0 } to { transform: none; opacity: 1 } }
 body.t-mezen .mcard .big { animation: mezen-breathe 3s ease-in-out infinite }
 body.t-mezen .panel { border: 1.5px solid var(--soot); border-radius: 3px; background: var(--plank) }
+body.t-mezen .tcard b { font-size: clamp(10px, 3vw, 15px); overflow-wrap: anywhere }
 .tcard.t-mezen .sw { background: linear-gradient(135deg, #f6e4bc, #e0b878) }
 
 @media (max-width: 520px) {
