@@ -9,6 +9,7 @@ const gift = {
   items: Array.from({ length: 24 }, (_, i) => `Сюрприз №${i + 1}: «какао» & <печенье>`),
   from: 'Алиса',
   note: 'С наступающим!\nОткрывай по одной.',
+  unlocked: true,
 };
 
 async function tokenOf(payload) {
@@ -21,6 +22,11 @@ async function tokenOf(payload) {
 describe('gift link', async () => {
   test('survives the round trip unchanged', async () => {
     assert.deepEqual(await decodeGift(await encodeGift(gift)), gift);
+  });
+
+  test('links made before the unlock setting open with doors locked', async () => {
+    const { unlocked, ...older } = gift;
+    assert.equal((await decodeGift(await tokenOf(older))).unlocked, false);
   });
 
   test('fits into a link that messengers accept', async () => {
@@ -37,6 +43,7 @@ describe('gift link', async () => {
     'an empty item': await tokenOf({ ...gift, items: ['', ...gift.items.slice(1)] }),
     'an item made only of invisible characters': await tokenOf({ ...gift, items: ['\u200B\u202E', ...gift.items.slice(1)] }),
     'a very long note': await tokenOf({ ...gift, note: 'a'.repeat(5000) }),
+    'an unlock flag that is not true or false': await tokenOf({ ...gift, unlocked: 'yes' }),
     'a theme name with markup': await tokenOf({ ...gift, theme: '"><script>' }),
     'a link longer than any real gift': `1${'A'.repeat(20000)}`,
     'a small link that unpacks into megabytes': await tokenOf({ ...gift, note: ' '.repeat(5_000_000) }),
