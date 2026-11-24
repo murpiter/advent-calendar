@@ -1,9 +1,11 @@
 import { appUrl } from './config.js';
 import { currentDay, doorState, shuffle } from './domain/calendar.js';
 import { decodeGift, encodeGift } from './domain/gift.js';
+import { parsePreset } from './domain/preset.js';
+import { buildSavedPage, capturePage, download, newCalendarId, takePreset } from './export/save-file.js';
 import { LANGUAGES, detectLanguage, otherLanguage } from './i18n/index.js';
-import { exampleCalendar, exampleItems, isExample, loadState, persist, translateExample } from './state.js';
-import { load } from './storage/store.js';
+import { exampleCalendar, exampleItems, isExample, loadState, persist, presetOf, translateExample } from './state.js';
+import { load, useNamespace } from './storage/store.js';
 import { themeById } from './themes/index.js';
 import { $ } from './ui/dom.js';
 import { openDoor } from './ui/door.js';
@@ -15,9 +17,14 @@ import { fillForm, parseItems, renderCount, renderSetupForm, renderThemes, selec
 import { createSnow } from './ui/snow.js';
 import { toast } from './ui/toast.js';
 
+const presetText = takePreset();
+const pageHtml = capturePage();
+const preset = presetText && parsePreset(presetText);
+if (preset) useNamespace(preset.id);
+
 const lang = detectLanguage(load('lang', null), navigator.languages ?? [navigator.language]);
 let strings = LANGUAGES[lang];
-const state = loadState(lang, strings);
+const state = loadState(lang, strings, preset);
 const snow = createSnow($('snow'));
 
 const today = () => (state.demo ? state.demoDay : currentDay(new Date(), state.days));
@@ -55,7 +62,7 @@ function renderAll() {
 
 function renderStaticText() {
   const labels = {
-    toSetup: strings.setup, reshuffle: strings.reshuffle, exitDemo: strings.exitDemo, ownCalendar: strings.ownCalendar,
+    toSetup: strings.setup, reshuffle: strings.reshuffle, saveBtn: strings.saveFile, exitDemo: strings.exitDemo, ownCalendar: strings.ownCalendar,
     styleHeading: strings.styleHeading, itemsHeading: strings.itemsHeading, titleLabel: strings.titleLabel,
     daysLabel: strings.daysLabel, itemsLabel: strings.itemsLabel, build: strings.build, giftBtn: strings.gift,
     example: strings.example, back: strings.back, doorsHeading: strings.doorsHeading,
@@ -154,6 +161,12 @@ function onGive() {
   openGiftDialog({ strings, makeLink, returnFocus: $('giftBtn') });
 }
 
+async function onSave() {
+  const html = await buildSavedPage({ pageHtml, preset: presetOf(state, newCalendarId()), families: theme().fonts });
+  download(html, state.title || strings.themes[state.theme].title);
+  toast(strings.saved);
+}
+
 function onReshuffle() {
   Object.assign(state, { assign: shuffle(state.items), opened: [] });
   persist(state);
@@ -236,6 +249,7 @@ function bindEvents() {
     show('setup');
   });
   $('reshuffle').addEventListener('click', onReshuffle);
+  $('saveBtn').addEventListener('click', onSave);
   $('ownCalendar').addEventListener('click', onOwnCalendar);
   $('langBtn').addEventListener('click', switchLanguage);
   $('themes').addEventListener('click', onThemePick);

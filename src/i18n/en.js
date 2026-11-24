@@ -31,6 +31,8 @@ export default {
   doorsHeading: 'Doors',
   unlockLabel: 'Any door can be opened without waiting for its day',
   demoLabel: 'Demo mode: step through days with − and +',
+  saveFile: 'Save as file',
+  saved: 'File saved: open it with a double click',
   gift: 'Give as a gift',
   giftHeading: 'A calendar as a gift',
   giftOrder: 'Door 1 opens the first line of the list, door 2 the second, and so on. The recipient won’t see the list in advance.',
