@@ -1,0 +1,98 @@
+body.t-mezen {
+  --bg: #ecd09a; --bg2: #e0b878; --ink: #1d1510; --muted: #6b4a2a; --accent: #b3362a; --accent2: #1d1510; --card: #f6e4bc;
+  --glow: rgba(179, 54, 42, .45); --danger: #b3362a;
+  --font-display: 'Ruslan Display', Georgia, serif; --font-body: 'Cormorant Garamond', Georgia, serif;
+  --red: #b3362a; --soot: #1d1510; --pencil: #a5835a; --plank: #f6e4bc;
+  --sun: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-50 -50 100 100'%3E%3Cdefs%3E%3Cpath id='p' d='M0-10.6C9.6-21.6 6.7-37.4 0-44.2C-6.7-37.4-9.6-21.6 0-10.6Z'/%3E%3C/defs%3E%3Ccircle r='48' fill='%23f6e4bc' stroke='%231d1510' stroke-width='2.4'/%3E%3Cuse href='%23p' fill='%23b3362a' transform='rotate(0)'/%3E%3Cuse href='%23p' fill='%231d1510' transform='rotate(30)'/%3E%3Cuse href='%23p' fill='%23b3362a' transform='rotate(60)'/%3E%3Cuse href='%23p' fill='%231d1510' transform='rotate(90)'/%3E%3Cuse href='%23p' fill='%23b3362a' transform='rotate(120)'/%3E%3Cuse href='%23p' fill='%231d1510' transform='rotate(150)'/%3E%3Cuse href='%23p' fill='%23b3362a' transform='rotate(180)'/%3E%3Cuse href='%23p' fill='%231d1510' transform='rotate(210)'/%3E%3Cuse href='%23p' fill='%23b3362a' transform='rotate(240)'/%3E%3Cuse href='%23p' fill='%231d1510' transform='rotate(270)'/%3E%3Cuse href='%23p' fill='%23b3362a' transform='rotate(300)'/%3E%3Cuse href='%23p' fill='%231d1510' transform='rotate(330)'/%3E%3Cg stroke='%231d1510' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M0-29V-42' transform='rotate(15)'/%3E%3Cpath d='M0-29V-42' transform='rotate(45)'/%3E%3Cpath d='M0-29V-42' transform='rotate(75)'/%3E%3Cpath d='M0-29V-42' transform='rotate(105)'/%3E%3Cpath d='M0-29V-42' transform='rotate(135)'/%3E%3Cpath d='M0-29V-42' transform='rotate(165)'/%3E%3Cpath d='M0-29V-42' transform='rotate(195)'/%3E%3Cpath d='M0-29V-42' transform='rotate(225)'/%3E%3Cpath d='M0-29V-42' transform='rotate(255)'/%3E%3Cpath d='M0-29V-42' transform='rotate(285)'/%3E%3Cpath d='M0-29V-42' transform='rotate(315)'/%3E%3Cpath d='M0-29V-42' transform='rotate(345)'/%3E%3C/g%3E%3Ccircle r='9.6' fill='%23b3362a' stroke='%231d1510' stroke-width='2'/%3E%3Cpath d='M-6 0H6M0-6V6' stroke='%23f6e4bc' stroke-width='2.4'/%3E%3C/svg%3E");
+  --zigzag: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 18'%3E%3Cpath d='M0 12L6 6L12 12' fill='none' stroke='%23b3362a' stroke-width='1.6'/%3E%3C/svg%3E");
+  --board: repeating-linear-gradient(90deg, rgba(120, 70, 20, .07) 0 1px, transparent 1px 7px), linear-gradient(170deg, #f6e4bc, #e8c891);
+  --frame: inset 0 0 0 3px #e2bf82, inset 0 0 0 4px var(--red), inset 0 0 0 7px var(--plank), inset 0 0 0 8px var(--soot);
+  background: repeating-linear-gradient(92deg, rgba(120, 70, 20, .05) 0 2px, transparent 2px 23px),
+    repeating-linear-gradient(88deg, rgba(120, 70, 20, .04) 0 1px, transparent 1px 41px), linear-gradient(180deg, #ecd09a, #e0b878) fixed;
+  font-size: 18px; font-weight: 500;
+  color-scheme: light;
+}
+body.t-mezen::before, body.t-mezen::after {
+  content: ''; position: fixed; z-index: 0; pointer-events: none; opacity: .13; aspect-ratio: 1; background: var(--sun) center / contain no-repeat;
+}
+body.t-mezen::before { width: 420px; top: -120px; left: -140px; animation: mezen-spin 90s linear infinite }
+body.t-mezen::after { width: 340px; bottom: -130px; right: -120px; animation: mezen-spin 70s linear infinite reverse }
+@keyframes mezen-spin { to { transform: rotate(360deg) } }
+
+body.t-mezen .hero-svg { max-width: none; filter: drop-shadow(0 14px 24px rgba(90, 45, 10, .3)) }
+body.t-mezen .hero h1 { margin-top: 18px; font-weight: 400; color: var(--red) }
+body.t-mezen .hero h1::after {
+  content: ''; display: block; width: min(320px, 80%); height: 18px; margin: 10px auto 0;
+  background: var(--sun) center / 18px no-repeat, var(--zigzag) left center / 12px 18px repeat-x;
+}
+body.t-mezen .hero p { font-style: italic; font-weight: 600; font-size: 20px; color: #5a3a1c }
+body.t-mezen .btn { border-radius: 3px; border: 1.5px solid var(--soot); font-weight: 700; font-size: 17px; color: var(--soot); background: var(--plank) }
+body.t-mezen .btn.primary { background: var(--red); border-color: var(--soot); color: var(--plank) }
+
+body.t-mezen .hero-svg .rot { transform-box: fill-box; transform-origin: center; animation: mezen-spin 24s linear infinite }
+body.t-mezen .hero-svg .rot.fast { animation-duration: 9s }
+body.t-mezen .hero-svg .rot.back { animation-direction: reverse }
+body.t-mezen .hero-svg .trot { transform-box: fill-box; transform-origin: 50% 100%; animation: mezen-trot 1.4s ease-in-out infinite }
+body.t-mezen .hero-svg .trot.late { animation-delay: -.7s }
+@keyframes mezen-trot { 0%, 100% { transform: none } 25% { transform: translateY(-2px) rotate(-1.5deg) } 75% { transform: translateY(-1px) rotate(1deg) } }
+body.t-mezen .hero-svg .bird { animation: mezen-glide 4s ease-in-out infinite alternate }
+body.t-mezen .hero-svg g:nth-of-type(2n) > .bird { animation-delay: -2s }
+@keyframes mezen-glide { to { transform: translateY(-3px) } }
+body.t-mezen .hero-svg .wing { transform-box: fill-box; transform-origin: 50% 100%; animation: mezen-flap .8s ease-in-out infinite alternate }
+body.t-mezen .hero-svg g:nth-of-type(2n) > .bird .wing { animation-delay: -.4s }
+@keyframes mezen-flap { to { transform: scaleY(-.6) } }
+body.t-mezen .hero-svg .nod { transform-box: fill-box; transform-origin: 30% 90%; animation: mezen-nod 3s ease-in-out infinite }
+@keyframes mezen-nod { 0%, 60%, 100% { transform: none } 75% { transform: rotate(14deg) } }
+body.t-mezen .hero-svg .flick { animation: mezen-flick 2.6s ease-in-out infinite }
+body.t-mezen .hero-svg .flick:nth-of-type(2n) { animation-delay: -1.3s }
+@keyframes mezen-flick { 50% { opacity: .35 } }
+
+body.t-mezen .cell {
+  overflow: visible; perspective: 700px; border-radius: 3px;
+  background: radial-gradient(circle at 50% 50%, #fff2d2, #e9c88b 75%); box-shadow: inset 0 0 0 2px var(--red), inset 0 0 0 5px var(--plank), inset 0 0 0 6px var(--soot);
+}
+body.t-mezen .cell .num { color: var(--red); font-weight: 400 }
+body.t-mezen .cell .ico { width: 66% }
+body.t-mezen .cell.open .ico svg { animation: mezen-breathe 3s ease-in-out infinite }
+@keyframes mezen-breathe { 50% { transform: scale(1.06) } }
+body.t-mezen .leaf {
+  position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; border-radius: 3px; transform-origin: 0 50%; backface-visibility: hidden;
+  background: var(--board); box-shadow: var(--frame), 0 6px 12px rgba(90, 45, 10, .28);
+}
+body.t-mezen .leaf::after { content: ''; position: absolute; right: 9px; top: 46%; width: 6px; height: 12px; border-radius: 3px; background: var(--soot) }
+body.t-mezen .leaf-pic { width: 70%; margin-top: 18% }
+body.t-mezen .leaf-pic svg { display: block; width: 100% }
+body.t-mezen .leaf-num { position: absolute; top: 9px; left: 0; right: 0; text-align: center; font-family: var(--font-display); font-size: clamp(15px, 3.6vw, 21px); color: var(--red) }
+body.t-mezen .cell.locked { opacity: 1 }
+body.t-mezen .cell.locked .leaf { box-shadow: inset 0 0 0 3px #e2bf82, inset 0 0 0 4px rgba(165, 131, 90, .5), inset 0 0 0 7px var(--plank), inset 0 0 0 8px rgba(165, 131, 90, .5), 0 6px 12px rgba(90, 45, 10, .18) }
+body.t-mezen .cell.locked .leaf-pic svg * { fill: none; stroke: var(--pencil); stroke-dasharray: 3 2; stroke-width: 1 }
+body.t-mezen .cell.locked .leaf-num { color: var(--pencil) }
+body.t-mezen .cell.ready .leaf-pic svg { animation: mezen-paint 1.2s ease-out both }
+@keyframes mezen-paint { from { clip-path: inset(0 100% 0 0) } to { clip-path: inset(0) } }
+body.t-mezen .cell.today { animation: none }
+body.t-mezen .cell.today .leaf { animation: mezen-ember 2.4s ease-in-out infinite }
+@keyframes mezen-ember { 50% { box-shadow: var(--frame), 0 0 0 3px var(--red), 0 0 26px rgba(179, 54, 42, .7) } }
+body.t-mezen .cell.today::after {
+  content: ''; position: absolute; z-index: 2; top: -12px; right: -10px; width: 34px; aspect-ratio: 1;
+  background: var(--sun) center / contain no-repeat; filter: drop-shadow(0 0 6px rgba(179, 54, 42, .6)); animation: mezen-spin 6s linear infinite;
+}
+body.t-mezen .cell:not(.locked):hover { transform: translateY(-3px) }
+body.t-mezen .cell.open .leaf { visibility: hidden }
+body.t-mezen .cell.opening .leaf { visibility: visible; animation: mezen-swing .9s cubic-bezier(.3, .7, .2, 1) forwards }
+@keyframes mezen-swing { to { transform: rotateY(-112deg) } }
+
+body.t-mezen .overlay { background: rgba(60, 30, 10, .45) }
+body.t-mezen .mcard { border-radius: 4px; background: var(--board); box-shadow: var(--frame), 0 20px 50px rgba(60, 30, 10, .45); animation: mezen-unfold .6s cubic-bezier(.3, .7, .2, 1) }
+@keyframes mezen-unfold { from { transform: perspective(900px) rotateY(-70deg); opacity: 0 } to { transform: none; opacity: 1 } }
+body.t-mezen .mcard .big { animation: mezen-breathe 3s ease-in-out infinite }
+body.t-mezen .panel { border: 1.5px solid var(--soot); border-radius: 3px; background: var(--plank) }
+.tcard.t-mezen .sw { background: linear-gradient(135deg, #f6e4bc, #e0b878) }
+
+@media (max-width: 520px) {
+  body.t-mezen .cell.today::after { width: 26px }
+  body.t-mezen .leaf::after { right: 5px; width: 4px; height: 9px }
+  body.t-mezen .leaf-pic { width: 60%; margin-top: 22% }
+  body.t-mezen .leaf-num { top: 5px }
+  body.t-mezen::before { width: 300px }
+  body.t-mezen::after { width: 240px }
+}

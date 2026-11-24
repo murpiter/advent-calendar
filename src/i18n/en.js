@@ -70,6 +70,7 @@ export default {
     kawaii: { name: 'Kawaii', sub: 'Year of the Goat, pastels and snow', title: 'Snowy goat', ok: 'Yay!' },
     palace: { name: 'Palace', sub: 'Royal blue, gold and monograms', title: 'Golden hall', ok: 'With gratitude' },
     forest: { name: 'Northern forest', sub: 'Mountains, pines and aurora', title: 'Night forest', ok: 'Got it' },
+    mezen: { name: 'Mezen painting', sub: 'Horses, birds and suns', title: 'Painted spinning wheel', ok: 'Lovely!' },
   },
   exampleTitle: 'Cleaning advent calendar',
   exampleItems: [
