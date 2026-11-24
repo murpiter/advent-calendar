@@ -10,35 +10,38 @@ const ICONS = [
 
 const OUTLINE = 'stroke="#6b4c10" stroke-width=".7"';
 
-function starPath(cx, cy, outer, inner, points, rotation = 0) {
-  const corners = Array.from({ length: points * 2 }, (_, i) => {
-    const r = i % 2 ? inner : outer;
-    const a = rotation + i * Math.PI / points;
-    return `${(cx + r * Math.cos(a)).toFixed(1)} ${(cy + r * Math.sin(a)).toFixed(1)}`;
-  });
-  return `M${corners.join('L')}Z`;
-}
 
-const strokes = (limbs, color, extra) => limbs.map(([d, width]) => `<path d="${d}" fill="none" stroke="${color}" `
-  + `stroke-width="${width + extra}" stroke-linecap="round" stroke-linejoin="round"/>`).join('');
-const engraved = (limbs) => strokes(limbs, '#6b4c10', 1.8) + strokes(limbs, 'url(#palGold)', 0);
+const OUTLINE_LINE = 'fill="none" stroke="#6b4c10" stroke-width=".55" stroke-linecap="round"';
+const horn = (d, width) => `<path d="${d}" fill="none" stroke="#6b4c10" stroke-width="${width + 1.2}" stroke-linecap="round"/>`
+  + `<path d="${d}" fill="none" stroke="url(#palGold)" stroke-width="${width}" stroke-linecap="round"/>`;
+const gilded = (paths) => paths.map((d) => `<path d="${d}" fill="url(#palGold)" ${OUTLINE}/>`).join('');
 
-const HIND = [['M36 74C20 72 10 58 16 46C20 38 14 30 8 34', 4], ['M40 72L34 90L31 104', 9], ['M25 106H39', 5], ['M48 74L60 86L70 84', 8]];
-const FORE = [['M60 42L74 32L83 23', 7], ['M58 52L72 54L83 50', 7]];
-const CLAWS = '<path d="M83 23l5-4M83 23l6 0M83 23l4 4M83 50l5-4M83 50l6 0M83 50l4 4M70 84l5-3M70 84l6 1M70 84l4 4" stroke="url(#palGold)" stroke-width="1.6" stroke-linecap="round"/>';
+const GOAT_BODY = [
+  'M40 88C35 75 41 61 53 52C57 49 61 48 65 50C64 59 60 67 56 75C52 83 51 90 51 96C46 97 42 95 40 88Z',
+  'M57 53C57 44 59 37 63 31L71 37C68 42 67 47 66 51Z',
+  'M41 86C40 98 38 106 35 113L33 119L38 119L38 114C43 106 47 98 50 91Z',
+  'M50 88C56 90 61 93 64 98L67 104L70.5 103L68 96C65 90 60 86 54 83Z',
+  'M60 51C66 49 72 46 77 42L82 37L84.5 39.5L80 44C74 50 68 54 63 56Z',
+  'M59 60C64 61 69 62 72 66L74 72L77 71.5L76 65C73 59 67 56 60 55Z',
+  'M41 84C37 80 34 75 36 69C38 73 41 77 44 80Z',
+];
+const GOAT_HEAD = [
+  'M68 26C64 26 60.5 27.5 58.5 30C62 30.5 66 30 70 28.5Z',
+  'M63 31C64 24 69 20 74 21C78 23 82 29 88 35C90 38 88 41 85 41C81 41 77 39 73 38C69 40 65 38 63 34Z',
+  'M81 40.5C80 44 80.5 47 82.5 49.5C83.2 46.5 84.5 43.5 84.5 41Z',
+];
+const HOOVES = '<g fill="#3a2a08"><path d="M32.5 119h6l.5 2.5h-7z"/><path d="M66.6 104l4-1.2 1 2.6-4 1.2z"/>'
+  + '<path d="M82 37l3.6-2.4 1.6 2.4-3.6 2.4z"/><path d="M73.6 72l3.6-.5.6 3.2-3.8.4z"/></g>';
+const ENGRAVING = 'M60 52C58 56 59 60 62 62M45 72C47 66 51 61 56 57M43 80C46 75 49 71 53 68M42 97C42 103 40 108 38 112M78 29C81 32 84 35 86 37M72.5 26Q75 24.5 77.5 26';
 
-const LION = '<symbol id="palLion" viewBox="0 -8 92 118">'
-  + engraved(HIND)
-  + `<path d="${starPath(8, 33, 7, 2.6, 5, -.3)}" fill="url(#palGold)" ${OUTLINE}/>`
-  + `<path d="M36 78C30 62 38 46 52 38L68 44C64 58 58 70 52 80Z" fill="url(#palGold)" ${OUTLINE}/>`
-  + '<path d="M44 52C48 56 48 64 44 68M40 56C42 60 42 66 40 70" fill="none" stroke="#6b4c10" stroke-width=".7" opacity=".7"/>'
-  + `<path d="${starPath(60, 25, 21, 14, 14, .15)}" fill="url(#palGold)" ${OUTLINE}/>`
-  + engraved(FORE) + CLAWS
-  + `<circle cx="67" cy="24" r="9.5" fill="#f2d98c" ${OUTLINE}/>`
-  + `<path d="M71 18L86 21L81 25L86 29L72 32Z" fill="#fbeaa8" ${OUTLINE}/>`
-  + '<path d="M80 25L87 26L81 27Z" fill="#c0392b"/>'
-  + '<circle cx="69" cy="21" r="1.5" fill="#0a1836"/><path d="M65 18.5l5-1.5" stroke="#6b4c10" stroke-width="1"/>'
-  + `<path d="M56 6l2-9 3.5 5.5 3.5-7 3.5 7 3.5-5.5 2 9z" fill="url(#palGold)" ${OUTLINE}/><circle cx="64.5" cy="-3" r="1.4" fill="#fff8dc"/>`
+const GOAT = '<symbol id="palGoat" viewBox="18 -6 76 130">'
+  + horn('M67 23C60 12 50 8 42 12C35 16 36 26 43 27', 2.6)
+  + gilded(GOAT_BODY) + HOOVES + gilded(GOAT_HEAD)
+  + `<circle cx="75" cy="27.5" r="1.1" fill="#0a1836"/><path d="${ENGRAVING}" ${OUTLINE_LINE}/>`
+  + horn('M71 22C66 8 52 0 40 4C28 8 24 22 32 30C38 36 48 32 46 24C45 19 39 19 38 23', 3.6)
+  + '<path d="M62 10l3-3M57 6l2-3.5M51 3.5l1.2-3.6M45 3.5l0-3.6M39 5l-1.5-3.3" stroke="#6b4c10" stroke-width=".7" stroke-linecap="round"/>'
+  + horn('M40 4C48-2 60 0 64 6M32 30C26 36 28 44 34 46C38 47 40 44 38 42', 1.2)
+  + '<circle cx="38" cy="42" r="1.3" fill="#fff8dc"/><circle cx="64" cy="6" r="1.3" fill="#fff8dc"/>'
   + '</symbol>';
 
 const ACANTHUS = '<symbol id="palAcanthus" viewBox="0 0 80 30">'
@@ -72,7 +75,7 @@ const DEFS = '<defs>'
   + '<pattern id="palFrieze" width="80" height="30" patternUnits="userSpaceOnUse"><use href="#palAcanthus" width="80" height="30"/></pattern>'
   + '<pattern id="palFriezeS" width="80" height="30" patternUnits="userSpaceOnUse" patternTransform="scale(.47)"><use href="#palAcanthus" width="80" height="30"/></pattern>'
   + '<clipPath id="palClip"><rect width="400" height="220" rx="10"/></clipPath>'
-  + LION + ACANTHUS + CORNER_ART + '</defs>';
+  + GOAT + ACANTHUS + CORNER_ART + '</defs>';
 
 const CANDLES = [[-46, 30], [-28, 26], [28, 26], [46, 30]];
 const CRYSTALS = [[-40, 58], [-26, 60], [-12, 62], [0, 64], [12, 62], [26, 60], [40, 58]];
@@ -113,8 +116,8 @@ function hero(title) {
     + '<svg y="191" width="400" height="30" class="gilt"><rect width="400" height="30" fill="url(#palFrieze)"/></svg>'
     + '<path d="M0 191H400M0 219H400" stroke="url(#palGold)" stroke-width="1.5"/>'
     + CHANDELIER
-    + '<use href="#palLion" x="80" y="82" width="86" height="105" class="gilt"/>'
-    + '<use href="#palLion" x="-320" y="82" width="86" height="105" transform="scale(-1 1)" class="gilt"/>'
+    + '<use href="#palGoat" x="84" y="58" width="78" height="134" class="gilt"/>'
+    + '<use href="#palGoat" x="-316" y="58" width="78" height="134" transform="scale(-1 1)" class="gilt"/>'
     + crest(title)
     + CURTAINS
     + '<rect width="400" height="14" fill="#0a1c4a"/><svg width="400" height="14"><rect width="400" height="14" fill="url(#palFriezeS)"/></svg>'
