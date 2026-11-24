@@ -7,6 +7,7 @@ function renderCell(day, state, theme, strings) {
   cell.dataset.day = day;
   cell.setAttribute('aria-label', `${strings.dayOfMonth(day)}, ${strings.doorState[state]}`);
   const leaf = el('span', 'leaf');
+  if (theme.door) leaf.append(trustedSvg('leaf-pic', theme.door(day)));
   leaf.append(el('span', 'leaf-num', String(day)));
   cell.append(el('span', 'num', String(day)), trustedSvg('ico', state === 'open' ? theme.icon(day) : ''), leaf);
   return cell;
