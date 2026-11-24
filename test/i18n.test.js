@@ -12,3 +12,13 @@ function shape(value) {
 test('English and Russian texts have the same keys and example sizes', () => {
   assert.deepEqual(shape(en), shape(ru));
 });
+
+test('Gingerbread counts sweet days in both languages', () => {
+  const ruDays = ru.themes.gingerbread?.subtitle;
+  assert.deepEqual([24, 25, 31].map((days) => ruDays?.(days)), [
+    '24 сладких дня до праздника',
+    '25 сладких дней до праздника',
+    '31 сладкий день до праздника',
+  ]);
+  assert.equal(en.themes.gingerbread?.subtitle?.(25), '25 sweet days until the holidays');
+});
