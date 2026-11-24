@@ -22,3 +22,5 @@ export function doorState(day, { today, opened, unlocked }) {
   if (day < today || opened.includes(day)) return 'open';
   return day > today && !unlocked ? 'locked' : 'ready';
 }
+
+export const adventYear = (date) => date.getFullYear() - (date.getMonth() === JANUARY ? 1 : 0);
