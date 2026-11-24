@@ -11,9 +11,9 @@ function makeFlakes(count, width, height) {
   }));
 }
 
-function drift(flake, t, width, height) {
+function drift(flake, t, wind, { width, height }) {
   flake.y += flake.speed;
-  flake.x += Math.sin(t / 1200 + flake.phase) * .35;
+  flake.x = (flake.x + Math.sin(t / 1200 + flake.phase) * .35 + wind + width) % width;
   if (flake.y > height + 10) {
     flake.y = -10;
     flake.x = Math.random() * width;
@@ -30,8 +30,9 @@ export function createSnow(canvas) {
 
   function draw(t) {
     ctx.clearRect(0, 0, size.width, size.height);
+    const wind = theme.snow.wind?.(t) ?? 0;
     for (const flake of flakes) {
-      if (!still) drift(flake, t, size.width, size.height);
+      if (!still) drift(flake, t, wind, size);
       theme.snow.paint(ctx, flake, t);
     }
   }
