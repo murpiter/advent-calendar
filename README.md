@@ -83,6 +83,6 @@ means one JS module and one stylesheet.
 
 ## License
 
-MIT: use, change and share the code, the art and the texts freely. See [LICENSE](LICENSE).
+Public domain ([Unlicense](LICENSE)): anyone can do anything with the code, the art and the texts.
 
 Fonts are bundled under the SIL Open Font License; the texts are in `public/fonts/licenses/`.
