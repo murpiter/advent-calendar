@@ -79,5 +79,13 @@ export function openGiftDialog({ strings, makeLink, returnFocus }) {
   create.addEventListener('click', async () => {
     const link = await makeLink({ from: from.value.trim(), note: note.value.trim() });
     result.replaceChildren(renderResult(link, strings));
+    create.hidden = true;
+    result.querySelector('button')?.focus();
   });
+  const reset = () => {
+    result.replaceChildren();
+    create.hidden = false;
+  };
+  from.addEventListener('input', reset);
+  note.addEventListener('input', reset);
 }
