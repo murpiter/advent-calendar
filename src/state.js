@@ -37,29 +37,48 @@ export function exampleCalendar(strings) {
   return { title: strings.exampleTitle, days: DEFAULT_DAYS, items, assign: shuffle(items), opened: [], gift: null };
 }
 
-function loadCalendar(strings) {
-  const days = pick(load('days'), (v) => DAY_OPTIONS.includes(v), DEFAULT_DAYS);
-  const items = pick(load('items'), (v) => isTextList(v, days), exampleItems(strings, days));
+const themeOrDefault = (id) => (Object.hasOwn(THEMES, id) ? id : DEFAULT_THEME);
+
+function defaults(strings, preset) {
+  if (preset) return preset;
+  return { theme: DEFAULT_THEME, unlocked: false, ...exampleCalendar(strings) };
+}
+
+function loadCalendar(fallback) {
+  const days = pick(load('days'), (v) => DAY_OPTIONS.includes(v), fallback.days);
+  const items = pick(load('items'), (v) => isTextList(v, days), fallback.items);
   return {
     days,
     items,
-    assign: pick(load('assign'), (v) => isTextList(v, days), shuffle(items)),
+    assign: pick(load('assign'), (v) => isTextList(v, days), fallback.assign),
     opened: pick(load('opened'), (v) => isDayList(v, days), []),
   };
 }
 
-export function loadState(lang, strings) {
+export function loadState(lang, strings, preset) {
+  const fallback = defaults(strings, preset);
   return {
     lang,
-    theme: pick(load('theme'), (v) => Object.hasOwn(THEMES, v), DEFAULT_THEME),
-    title: pick(load('title'), (v) => typeof v === 'string', strings.exampleTitle),
-    unlocked: load('unlocked') === true,
-    gift: pick(load('gift'), isGift, null),
-    ...loadCalendar(strings),
+    theme: pick(load('theme'), (v) => Object.hasOwn(THEMES, v), themeOrDefault(fallback.theme)),
+    title: pick(load('title'), (v) => typeof v === 'string', fallback.title),
+    unlocked: pick(load('unlocked'), (v) => typeof v === 'boolean', fallback.unlocked),
+    gift: pick(load('gift'), isGift, fallback.gift),
+    ...loadCalendar(fallback),
     demo: false,
     demoDay: 1,
   };
 }
+
+export const presetOf = (state, id) => ({
+  id,
+  theme: state.theme,
+  title: state.title,
+  days: state.days,
+  items: state.items,
+  assign: state.assign,
+  unlocked: state.unlocked,
+  gift: state.gift,
+});
 
 export function persist(state) {
   for (const key of STORED) save(key, state[key]);

@@ -1,4 +1,8 @@
-const PREFIX = 'adv_';
+let PREFIX = 'adv_';
+
+export function useNamespace(id) {
+  PREFIX = `adv_${id}_`;
+}
 
 export function load(key, fallback) {
   try {
