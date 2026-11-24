@@ -3,6 +3,7 @@ import fonts from '../fonts.json';
 
 const PRESET_ID = 'preset';
 const FONTS_ID = 'embedded-fonts';
+const WEB_APP_LINKS = ['manifest', 'touchIcon', 'favicon'];
 
 export function takePreset() {
   const node = document.getElementById(PRESET_ID);
@@ -63,6 +64,7 @@ function upsert(page, { id, tag, text, insert }) {
 
 export async function buildSavedPage({ pageHtml, preset, families }) {
   const page = new DOMParser().parseFromString(pageHtml, 'text/html');
+  for (const id of WEB_APP_LINKS) page.getElementById(id)?.remove();
   const css = await fontCss(families, page);
   upsert(page, { id: FONTS_ID, tag: 'style', text: css, insert: (node) => page.head.querySelector('style').after(node) });
   await allowFonts(page, css);

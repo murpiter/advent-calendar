@@ -6,14 +6,17 @@ import { fileName, parsePreset } from './domain/preset.js';
 import { download } from './export/download.js';
 import { buildSavedPage, capturePage, newCalendarId, takePreset } from './export/save-file.js';
 import { LANGUAGES, detectLanguage, otherLanguage } from './i18n/index.js';
+import { enableOffline } from './offline.js';
 import { exampleCalendar, exampleItems, isExample, loadState, persist, presetOf, translateExample } from './state.js';
 import { load, useNamespace } from './storage/store.js';
 import { themeById } from './themes/index.js';
+import { setAppLook } from './ui/app-look.js';
 import { $ } from './ui/dom.js';
 import { openDoor } from './ui/door.js';
 import { renderEnvelope } from './ui/envelope.js';
 import { openGiftDialog } from './ui/gift-dialog.js';
 import { openIcsDialog } from './ui/ics-dialog.js';
+import { setupInstall } from './ui/install.js';
 import { renderGrid, shake } from './ui/grid.js';
 import { renderHero } from './ui/hero.js';
 import { fillForm, parseItems, renderCount, renderSetupForm, renderThemes, selectedDays, validateItems } from './ui/setup.js';
@@ -45,6 +48,7 @@ function paintTheme(look, title, lines) {
   document.body.className = `t-${look.id}`;
   renderHero(look, title, lines);
   snow.setTheme(look);
+  setAppLook(look, strings.lang);
 }
 
 function applyTheme() {
@@ -66,7 +70,7 @@ function renderAll() {
 
 function renderStaticText() {
   const labels = {
-    toSetup: strings.setup, reshuffle: strings.reshuffle, saveBtn: strings.saveFile, icsBtn: strings.icsButton, exitDemo: strings.exitDemo, ownCalendar: strings.ownCalendar,
+    toSetup: strings.setup, reshuffle: strings.reshuffle, saveBtn: strings.saveFile, icsBtn: strings.icsButton, installBtn: strings.install, exitDemo: strings.exitDemo, ownCalendar: strings.ownCalendar,
     styleHeading: strings.styleHeading, itemsHeading: strings.itemsHeading, titleLabel: strings.titleLabel,
     daysLabel: strings.daysLabel, itemsLabel: strings.itemsLabel, build: strings.build, giftBtn: strings.gift,
     example: strings.example, back: strings.back, doorsHeading: strings.doorsHeading,
@@ -292,3 +296,7 @@ renderSetupForm(state, strings);
 bindEvents();
 persist(state);
 receiveGift();
+if (!preset) {
+  enableOffline();
+  setupInstall($('installBtn'), () => strings);
+}

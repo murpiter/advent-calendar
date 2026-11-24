@@ -6,6 +6,10 @@
 <meta http-equiv="Content-Security-Policy" content="%CSP%">
 <meta name="referrer" content="no-referrer">
 <title>Адвент-календарь</title>
+<meta name="theme-color" id="themeColor" content="%COLOR%">
+<link rel="manifest" id="manifest" href="manifest-%THEME%-ru.webmanifest">
+<link rel="apple-touch-icon" id="touchIcon" href="icons/%THEME%-180.png">
+<link rel="icon" id="favicon" href="icons/%THEME%-192.png">
 <style>%CSS%</style>
 </head>
 <body class="t-kawaii">
@@ -36,6 +40,7 @@
       <button class="btn" id="saveBtn" type="button"></button>
       <button class="btn" id="icsBtn" type="button"></button>
       <button class="btn" id="ownCalendar" type="button" hidden></button>
+      <button class="btn" id="installBtn" type="button" hidden></button>
       <button class="btn small" id="langBtn" type="button"></button>
     </div>
     <div class="frame" id="frame">
