@@ -3,6 +3,9 @@ const plural = (n, forms) => `${n} ${forms[rules.select(n)] ?? forms.many}`;
 const DOORS = { one: 'дверца', few: 'дверцы', many: 'дверец' };
 
 export default {
+  lang: 'ru',
+  pageTitle: 'Адвент-календарь',
+  switchTo: { code: 'EN', label: 'English' },
   dayOfMonth: (day) => `${day} декабря`,
   subtitle: (days) => `${plural(days, DOORS)} · с 1 по ${days} декабря`,
   demoToday: (day) => `Пробный режим: сегодня ${day ? `${day} декабря` : 'до 1 декабря'}`,

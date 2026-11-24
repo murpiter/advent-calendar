@@ -1,6 +1,7 @@
 import { currentDay, doorState, shuffle } from './domain/calendar.js';
-import strings from './i18n/ru.js';
-import { exampleItems, loadState, persist } from './state.js';
+import { LANGUAGES, detectLanguage, otherLanguage } from './i18n/index.js';
+import { exampleItems, loadState, persist, translateExample } from './state.js';
+import { load } from './storage/store.js';
 import { themeById } from './themes/index.js';
 import { $ } from './ui/dom.js';
 import { openDoor } from './ui/door.js';
@@ -10,7 +11,9 @@ import { fillForm, parseItems, renderCount, renderSetupForm, renderThemes, selec
 import { createSnow } from './ui/snow.js';
 import { toast } from './ui/toast.js';
 
-const state = loadState(strings);
+const lang = detectLanguage(load('lang', null), navigator.languages ?? [navigator.language]);
+let strings = LANGUAGES[lang];
+const state = loadState(lang, strings);
 const snow = createSnow($('snow'));
 
 const today = () => (state.demo ? state.demoDay : currentDay(new Date(), state.days));
@@ -39,6 +42,23 @@ function renderStaticText() {
   for (const [id, text] of Object.entries(labels)) $(id).textContent = text;
   $('dayMinus').setAttribute('aria-label', strings.prevDay);
   $('dayPlus').setAttribute('aria-label', strings.nextDay);
+  $('langBtn').textContent = strings.switchTo.code;
+  $('langBtn').setAttribute('aria-label', strings.switchTo.label);
+  document.documentElement.lang = strings.lang;
+  document.title = strings.pageTitle;
+}
+
+function switchLanguage() {
+  const next = LANGUAGES[otherLanguage(state.lang)];
+  translateExample(state, strings, next);
+  strings = next;
+  state.lang = next.lang;
+  persist(state);
+  renderStaticText();
+  applyTheme();
+  renderCalendar();
+  renderThemes(state.theme, strings);
+  renderCount(strings);
 }
 
 function show(view) {
@@ -139,6 +159,7 @@ function bindEvents() {
     show('setup');
   });
   $('reshuffle').addEventListener('click', onReshuffle);
+  $('langBtn').addEventListener('click', switchLanguage);
   $('themes').addEventListener('click', onThemePick);
   $('itemsIn').addEventListener('input', onFormChange);
   $('daysIn').addEventListener('change', onFormChange);
@@ -152,5 +173,6 @@ function bindEvents() {
 renderStaticText();
 applyTheme();
 renderCalendar();
+renderSetupForm(state, strings);
 bindEvents();
 persist(state);
