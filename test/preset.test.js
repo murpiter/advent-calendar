@@ -4,7 +4,7 @@ import { fileName, parsePreset, serializePreset } from '../src/domain/preset.js'
 
 const items = Array.from({ length: 25 }, (_, i) => `Дело ${i + 1}`);
 items[0] = '</script><script>alert(1)</script>';
-items[1] = 'line separator & <!-- comment';
+items[1] = 'line\u2028separator & <!-- comment';
 
 const preset = {
   id: 'a1b2c3d4e5f6a7b8',
@@ -20,7 +20,7 @@ const preset = {
 describe('saved file data', () => {
   test('cannot break out of its script tag and survives the round trip', () => {
     const text = serializePreset(preset);
-    assert.doesNotMatch(text, /[<>  ]/);
+    assert.doesNotMatch(text, /[<>\u2028\u2029]/);
     assert.deepEqual(parsePreset(text), preset);
   });
 
