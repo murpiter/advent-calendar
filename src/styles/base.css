@@ -66,7 +66,7 @@ button { font: inherit; color: inherit; cursor: pointer }
 .overlay { position: fixed; inset: 0; z-index: 20; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgba(20, 10, 30, .45); backdrop-filter: blur(3px); animation: fade .25s }
 @keyframes fade { from { opacity: 0 } to { opacity: 1 } }
 .mcard { position: relative; width: 100%; max-width: 400px; padding: 28px 24px 24px; text-align: center; overflow: hidden; background: var(--card) }
-.mcard .big { width: 104px; height: 104px; margin: 0 auto 6px }
+.mcard .big { display: block; width: 104px; height: 104px; margin: 0 auto 6px }
 .mcard .big svg { width: 100%; height: 100% }
 .mcard .date { font-family: var(--font-display); font-size: 15px; color: var(--muted); letter-spacing: .04em }
 .mcard h2 { font-size: clamp(22px, 6vw, 28px); line-height: 1.2; margin: 6px 0 18px; overflow-wrap: anywhere }
