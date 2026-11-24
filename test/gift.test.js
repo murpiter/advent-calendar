@@ -18,7 +18,7 @@ async function tokenOf(payload) {
   return `1${Buffer.from(packed).toString('base64url')}`;
 }
 
-describe('gift link', () => {
+describe('gift link', async () => {
   test('survives the round trip unchanged', async () => {
     assert.deepEqual(await decodeGift(await encodeGift(gift)), gift);
   });
