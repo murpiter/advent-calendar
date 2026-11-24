@@ -41,10 +41,13 @@ async function unpack(bytes) {
 
 const isValidGift = (gift) => isObject(gift) && isCalendar(gift)
   && isLine(gift.from, LIMITS.from)
-  && isText(gift.note, LIMITS.note);
+  && isText(gift.note, LIMITS.note)
+  && [undefined, true, false].includes(gift.unlocked);
 
-function normalize({ theme, title, days, items, from, note }) {
-  return { theme, title: clean(title), days, items: items.map(clean), from: clean(from), note: clean(note) };
+function normalize({ theme, title, days, items, from, note, unlocked }) {
+  return {
+    theme, title: clean(title), days, items: items.map(clean), from: clean(from), note: clean(note), unlocked: unlocked === true,
+  };
 }
 
 export async function encodeGift(gift) {

@@ -166,7 +166,7 @@ function onGive() {
   const form = readForm();
   if (!form) return;
   const makeLink = async ({ from, note }) => {
-    const token = await encodeGift({ theme: state.theme, ...form, from, note });
+    const token = await encodeGift({ theme: state.theme, ...form, from, note, unlocked: $('unlockIn').checked });
     return `${appUrl()}#gift=${token}`;
   };
   openGiftDialog({ strings, makeLink, returnFocus: $('giftBtn') });
@@ -236,7 +236,7 @@ function acceptGift(gift, token) {
     items: gift.items,
     assign: gift.items,
     opened: [],
-    unlocked: false,
+    unlocked: gift.unlocked,
     gift: { from: gift.from, token },
   });
   persist(state);
