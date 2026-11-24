@@ -10,7 +10,7 @@ function renderCorners(theme) {
 }
 
 export function renderHero(theme, title, lines) {
-  const art = trustedSvg('', theme.hero()).firstElementChild;
+  const art = trustedSvg('', theme.hero(title)).firstElementChild;
   art.classList.add('hero-svg');
   $('hero').replaceChildren(art, el('h1', '', title), ...lines.map((line) => el('p', '', line)));
   renderCorners(theme);
