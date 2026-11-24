@@ -1,16 +1,9 @@
-import { DAY_OPTIONS } from './calendar.js';
+import { LIMITS, clean, isCalendar, isLine, isObject, isText } from './validate.js';
 
 const VERSION = '1';
 const MAX_TOKEN_LENGTH = 8000;
 const MAX_UNPACKED_BYTES = 64 * 1024;
-const LIMITS = { title: 60, item: 200, from: 60, note: 400 };
 const TOKEN_PATTERN = /^[A-Za-z0-9_-]+$/;
-const THEME_PATTERN = /^[a-z]{1,20}$/;
-const INVISIBLE = /[\u0000-\u0009\u000B-\u001F\u007F\u200B-\u200F\u202A-\u202E\u2066-\u2069]/g;
-
-const clean = (text) => text.replace(INVISIBLE, '');
-const isText = (value, max) => typeof value === 'string' && value.length <= max;
-const isLine = (value, max) => isText(value, max) && !value.includes('\n');
 
 function toBase64Url(bytes) {
   let binary = '';
@@ -43,16 +36,9 @@ async function unpack(bytes) {
   return new TextDecoder('utf-8', { fatal: true }).decode(await new Blob(chunks).arrayBuffer());
 }
 
-function isValidGift(gift) {
-  return gift !== null && typeof gift === 'object'
-    && THEME_PATTERN.test(gift.theme)
-    && isLine(gift.title, LIMITS.title)
-    && DAY_OPTIONS.includes(gift.days)
-    && Array.isArray(gift.items) && gift.items.length === gift.days
-    && gift.items.every((item) => isLine(item, LIMITS.item) && item.trim() !== '')
-    && isLine(gift.from, LIMITS.from)
-    && isText(gift.note, LIMITS.note);
-}
+const isValidGift = (gift) => isObject(gift) && isCalendar(gift)
+  && isLine(gift.from, LIMITS.from)
+  && isText(gift.note, LIMITS.note);
 
 function normalize({ theme, title, days, items, from, note }) {
   return { theme, title: clean(title), days, items: items.map(clean), from: clean(from), note: clean(note) };
