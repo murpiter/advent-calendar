@@ -1,4 +1,5 @@
-import { $, el, prefersReducedMotion, trustedSvg } from './dom.js';
+import { el, prefersReducedMotion, trustedSvg } from './dom.js';
+import { button, showModal } from './modal.js';
 
 const BURST_SIZE = 18;
 
@@ -22,35 +23,13 @@ function burst(theme) {
   for (let i = 0; i < BURST_SIZE; i++) flyParticle(theme, i, origin);
 }
 
-function buildCard({ day, text, theme, strings }) {
-  const card = el('div', 'mcard');
-  card.setAttribute('role', 'dialog');
-  card.setAttribute('aria-modal', 'true');
-  const content = el('div', 'content');
-  const ok = el('button', 'btn primary', strings.themes[theme.id].ok);
-  ok.type = 'button';
-  content.append(trustedSvg('big', theme.icon(day)), el('div', 'date', strings.dayOfMonth(day)), el('h2', '', text), ok);
-  card.append(content);
-  return { card, ok };
-}
-
 export function openDoor({ day, text, theme, strings, fresh, returnFocus }) {
-  const root = $('modalRoot');
-  const overlay = el('div', 'overlay');
-  const { card, ok } = buildCard({ day, text, theme, strings });
-  overlay.append(card);
-  root.replaceChildren(overlay);
-
-  const onKey = (event) => event.key === 'Escape' && close();
-  function close() {
-    root.replaceChildren();
-    document.removeEventListener('keydown', onKey);
-    returnFocus?.focus();
-  }
-
-  document.addEventListener('keydown', onKey);
+  const ok = button(strings.themes[theme.id].ok, 'btn primary');
+  const content = el('div', 'content');
+  content.append(trustedSvg('big', theme.icon(day)), el('div', 'date', strings.dayOfMonth(day)), el('h2', '', text), ok);
+  const card = el('div');
+  card.append(content);
+  const close = showModal(card, { focus: ok, returnFocus });
   ok.addEventListener('click', close);
-  overlay.addEventListener('click', (event) => event.target === overlay && close());
-  ok.focus();
   if (fresh) burst(theme);
 }
