@@ -1,4 +1,4 @@
-import { fileName, serializePreset } from '../domain/preset.js';
+import { serializePreset } from '../domain/preset.js';
 import fonts from '../fonts.json';
 
 const PRESET_ID = 'preset';
@@ -70,12 +70,4 @@ export async function buildSavedPage({ pageHtml, preset, families }) {
   upsert(page, { id: PRESET_ID, tag: 'script', text: data, insert: (node) => page.body.querySelector('script').before(node) })
     .type = 'application/json';
   return `<!DOCTYPE html>\n${page.documentElement.outerHTML}`;
-}
-
-export function download(html, title) {
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
-  link.download = fileName(title);
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
 }

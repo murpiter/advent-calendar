@@ -36,7 +36,7 @@ export function parsePreset(text) {
   }
 }
 
-export function fileName(title) {
+export function fileName(title, extension = '.html') {
   const safe = title.replace(UNSAFE_IN_FILE_NAMES, ' ').replace(/\s+/g, ' ').trim().slice(0, 60);
-  return `${safe || 'advent-calendar'}.html`;
+  return `${safe || 'advent-calendar'}${extension}`;
 }
