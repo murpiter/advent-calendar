@@ -1,20 +1,77 @@
 body.t-forest {
-  --bg: #10272b; --bg2: #091719; --ink: #e7f0ea; --muted: #8fa9a0; --accent: #ffb347; --accent2: #6fd6b0; --card: #16363a;
+  --bg: #0b1d2b; --bg2: #040b10; --ink: #e7f0ea; --muted: #8fa9a0; --accent: #ffb347; --accent2: #6fd6b0; --card: #16363a;
   --glow: rgba(255, 179, 71, .5); --danger: #ff8a8a;
-  --font-display: 'Oswald', system-ui, sans-serif; --font-body: 'Barlow', system-ui, sans-serif;
+  --font-display: 'Oswald', system-ui, sans-serif; --font-body: 'Oswald', system-ui, sans-serif;
+  --wood: repeating-linear-gradient(90deg, rgba(0, 0, 0, .28) 0 2px, transparent 2px 33.3%),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, .03) 0 3px, transparent 3px 9px),
+    linear-gradient(180deg, #5a3a22, #3b2414);
+  --hinges: linear-gradient(#23272b, #23272b) 6px 18% / 40% 5px no-repeat, linear-gradient(#23272b, #23272b) 6px 82% / 40% 5px no-repeat;
+  background: radial-gradient(120% 70% at 50% 0%, #11304a 0%, var(--bg) 50%, var(--bg2) 100%) fixed;
+  font-weight: 300; letter-spacing: .02em;
   color-scheme: dark;
 }
-body.t-forest .hero h1 { text-transform: uppercase; letter-spacing: .08em; font-weight: 500 }
-body.t-forest .btn { border-radius: 2px; text-transform: uppercase; letter-spacing: .06em; font-size: 13px }
+body.t-forest .hero-svg { max-width: none; border-radius: 14px; box-shadow: 0 18px 40px rgba(0, 0, 0, .45) }
+body.t-forest .hero h1 { text-transform: uppercase; letter-spacing: .14em; font-weight: 500; margin-top: 14px; text-shadow: 0 0 24px rgba(111, 214, 176, .45) }
+body.t-forest .hero p { text-transform: uppercase; letter-spacing: .24em; font-size: 13px }
+body.t-forest .btn { border-radius: 2px; text-transform: uppercase; letter-spacing: .08em; font-size: 13px; font-weight: 400 }
 body.t-forest .btn.primary { color: #10272b }
-body.t-forest .cell { border: 2px solid rgba(231, 240, 234, .2); background: rgba(255, 255, 255, .05); clip-path: polygon(0 12px, 12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%) }
-body.t-forest .cell .num { color: #e7f0ea; font-weight: 500 }
-body.t-forest .cell.open { background: rgba(111, 214, 176, .12); border-color: rgba(111, 214, 176, .55) }
-body.t-forest .cell.today { border-color: #ffb347 }
+
+body.t-forest .tw { transform-box: fill-box; transform-origin: center; animation: forest-twinkle 3s ease-in-out infinite }
+body.t-forest .tw1 { animation-delay: -1s }
+body.t-forest .tw2 { animation-delay: -2s }
+@keyframes forest-twinkle { 50% { opacity: .2; transform: scale(.6) } }
+body.t-forest .shoot { opacity: 0; animation: forest-shoot 9s linear infinite 2s }
+@keyframes forest-shoot { 0% { opacity: 0; transform: translate(0, 0) } 2% { opacity: 1 } 9% { opacity: 0; transform: translate(320px, 90px) } 100% { opacity: 0 } }
+body.t-forest .aur { transform-box: fill-box; transform-origin: center; mix-blend-mode: screen }
+body.t-forest .aur1 { animation: forest-wave 14s ease-in-out infinite alternate }
+body.t-forest .aur2 { animation: forest-wave 19s ease-in-out infinite alternate-reverse }
+@keyframes forest-wave { 0% { transform: translateX(-6%) skewY(-6deg) scaleY(.8) } 50% { transform: translateX(4%) skewY(4deg) scaleY(1.15) } 100% { transform: translateX(-2%) skewY(-3deg) scaleY(.9) } }
+body.t-forest .hearth { animation: forest-hearth 3.2s ease-in-out infinite }
+@keyframes forest-hearth { 0%, 100% { opacity: .55 } 40% { opacity: .95 } 70% { opacity: .7 } }
+body.t-forest .puff { opacity: 0; transform-box: fill-box; transform-origin: center; animation: forest-puff 5s ease-out infinite }
+body.t-forest .puff:nth-child(2) { animation-delay: 1.7s }
+body.t-forest .puff:nth-child(3) { animation-delay: 3.4s }
+@keyframes forest-puff { 0% { opacity: 0; transform: translate(0, 0) scale(.6) } 15% { opacity: .45 } 100% { opacity: 0; transform: translate(14px, -46px) scale(2.4) } }
+
+body.t-forest .cell {
+  overflow: visible; perspective: 600px; border-radius: 4px;
+  border: 1px solid rgba(255, 179, 71, .3);
+  background: radial-gradient(circle at 50% 45%, rgba(255, 179, 71, .3), rgba(16, 39, 43, .92) 70%);
+}
+body.t-forest .cell .num { color: #f6d9a8; font-weight: 500 }
+body.t-forest .cell.open .ico svg { filter: drop-shadow(0 0 8px rgba(255, 179, 71, .8)) }
+body.t-forest .leaf {
+  position: absolute; inset: -1px; display: grid; place-items: center; z-index: 1;
+  border-radius: 4px; background: var(--hinges), var(--wood);
+  box-shadow: inset 0 0 0 2px #2a170c, 0 6px 14px rgba(0, 0, 0, .45);
+  transform-origin: left center; backface-visibility: hidden;
+}
+body.t-forest .leaf-num {
+  font-family: var(--font-display); font-weight: 500; font-size: clamp(20px, 5.6vw, 30px);
+  color: #f6d9a8; text-shadow: 0 1px 0 #1a0d05, 0 0 10px rgba(255, 179, 71, .35);
+}
+body.t-forest .cell.open .leaf { transform: rotateY(-108deg); visibility: hidden }
+body.t-forest .cell.opening .leaf { visibility: visible; animation: forest-swing .9s cubic-bezier(.3, .7, .2, 1) both }
+@keyframes forest-swing { from { transform: none } to { transform: rotateY(-108deg); visibility: hidden } }
+body.t-forest .cell.locked { opacity: 1; filter: saturate(.85) brightness(.85) }
+body.t-forest .cell.locked .leaf::before {
+  content: ''; position: absolute; inset: 0; border-radius: 4px; pointer-events: none;
+  background: radial-gradient(circle at 0 0, rgba(231, 240, 234, .35), transparent 28%), radial-gradient(circle at 100% 100%, rgba(231, 240, 234, .25), transparent 24%);
+}
+body.t-forest .cell.today { animation: none }
+body.t-forest .cell.today .leaf { animation: forest-lantern 2.2s ease-in-out infinite }
+@keyframes forest-lantern { 0%, 100% { box-shadow: 0 0 0 2px #ffb347, 0 0 18px rgba(255, 179, 71, .55) } 50% { box-shadow: 0 0 0 2px #ffb347, 0 0 34px rgba(255, 140, 50, .9) } }
+body.t-forest .cell.today .leaf::after {
+  content: ''; position: absolute; left: 50%; top: 6px; width: 10px; height: 14px; margin-left: -5px; border-radius: 50% 50% 40% 40%;
+  background: radial-gradient(circle at 50% 70%, #fff3c4, #ffb347 55%, transparent 70%);
+  animation: forest-flame .4s ease-in-out infinite alternate;
+}
+@keyframes forest-flame { to { transform: scaleY(1.2) translateY(-1px) } }
+
 body.t-forest .overlay { background: rgba(3, 10, 12, .7) }
-body.t-forest .mcard { border: 2px solid #ffb347; background: linear-gradient(180deg, #16363a, #0d2124); clip-path: polygon(0 18px, 18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%); animation: lift .55s cubic-bezier(.2, .8, .2, 1) }
-@keyframes lift { from { transform: translateY(60px); opacity: 0 } to { transform: none; opacity: 1 } }
-body.t-forest .mcard .big { animation: flicker 2.4s infinite }
-@keyframes flicker { 0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 179, 71, .6)) } 45% { filter: drop-shadow(0 0 14px rgba(255, 179, 71, .9)) } 60% { filter: drop-shadow(0 0 4px rgba(255, 179, 71, .4)) } }
+body.t-forest .mcard { border: 2px solid #ffb347; background: linear-gradient(180deg, #16363a, #0d2124); clip-path: polygon(0 18px, 18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%); animation: forest-lift .55s cubic-bezier(.2, .8, .2, 1) }
+@keyframes forest-lift { from { transform: translateY(60px); opacity: 0 } to { transform: none; opacity: 1 } }
+body.t-forest .mcard .big { animation: forest-glow 2.4s infinite }
+@keyframes forest-glow { 0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 179, 71, .6)) } 45% { filter: drop-shadow(0 0 14px rgba(255, 179, 71, .9)) } 60% { filter: drop-shadow(0 0 4px rgba(255, 179, 71, .4)) } }
 body.t-forest .panel { border: 1px solid rgba(231, 240, 234, .18); border-radius: 4px }
 .tcard.t-forest .sw { background: linear-gradient(135deg, #16424a, #091719) }
