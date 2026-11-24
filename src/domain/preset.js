@@ -38,6 +38,6 @@ export function parsePreset(text) {
 }
 
 export function fileName(title, extension = '.html') {
-  const safe = title.replace(UNSAFE_IN_FILE_NAMES, ' ').replace(/\s+/g, ' ').trim().slice(0, 60);
-  return `${safe || 'advent-calendar'}${extension}`;
+  const safe = clean(title).replace(UNSAFE_IN_FILE_NAMES, ' ').replace(/\s+/g, ' ').trim();
+  return `${[...safe].slice(0, 60).join('') || 'advent-calendar'}${extension}`;
 }
