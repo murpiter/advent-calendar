@@ -179,7 +179,7 @@ async function onSave() {
 }
 
 function calendarEvents(showTasks) {
-  const link = state.gift ? `${appUrl()}#gift=${state.gift.token}` : appUrl();
+  const link = appUrl();
   return state.assign.map((task, index) => ({
     day: index + 1,
     summary: showTasks ? strings.icsTask(index + 1, task) : strings.icsEvent(index + 1),
