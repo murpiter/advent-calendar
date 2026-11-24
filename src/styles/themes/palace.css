@@ -1,23 +1,125 @@
 body.t-palace {
-  --bg: #0a1836; --bg2: #050d24; --ink: #f3e7c6; --muted: #b9a878; --accent: #d9b45b; --accent2: #f2d98c; --card: #0f2250;
-  --glow: rgba(242, 217, 140, .55); --danger: #ff8a8a;
-  --font-display: 'Cormorant Garamond', 'Playfair Display', Georgia, serif; --font-body: 'Playfair Display', Georgia, serif;
+  --bg: #0a1836; --bg2: #050d24; --ink: #f3e7c6; --muted: #c9b783; --accent: #d9b45b; --accent2: #f2d98c; --card: #0f2250;
+  --glow: rgba(242, 217, 140, .6); --danger: #ff8a8a;
+  --font-display: 'Playfair Display', Georgia, serif; --font-body: 'Cormorant Garamond', Georgia, serif;
+  --gilt: linear-gradient(135deg, #fff3c4, #f2d98c 35%, #d9b45b 65%, #9b7421);
+  --lacquer: linear-gradient(160deg, #1d3f8f, #0d2156 60%, #081538);
+  --frieze: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 30'%3E%3Cg fill='%23d9b45b'%3E%3Cpath d='M0 20C12 20 18 8 30 8C40 8 42 18 34 20C28 22 26 15 31 14M34 20C48 25 62 26 80 20' fill='none' stroke='%23d9b45b' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M19 12C22 4 32-1 41 1C36 3 39 7 34 8C39 9 37 13 32 12C35 15 31 17 28 15C27 18 22 17 22 14Z'/%3E%3Cpath d='M46 23C51 15 60 14 65 18C60 18 61 21 56 22C60 24 56 27 51 25C51 28 46 27 46 23Z'/%3E%3C/g%3E%3C/svg%3E");
+  --damask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cpath d='M30 8C36 18 44 22 52 30C44 38 36 42 30 52C24 42 16 38 8 30C16 22 24 18 30 8Z' fill='none' stroke='%23d9b45b' stroke-opacity='.07' stroke-width='1.2'/%3E%3Ccircle cx='30' cy='30' r='3' fill='%23d9b45b' fill-opacity='.07'/%3E%3C/svg%3E");
+  background: var(--damask) 0 0 / 60px 60px, radial-gradient(120% 80% at 50% 0%, #1a3a80 0%, var(--bg) 55%, var(--bg2) 100%) fixed;
+  font-size: 17px;
   color-scheme: dark;
 }
-body.t-palace .hero h1 { letter-spacing: .04em; font-weight: 700; background: linear-gradient(180deg, #fbeaa8, #c79a38); -webkit-background-clip: text; background-clip: text; color: transparent }
-body.t-palace .btn { border-radius: 4px; border-width: 1.5px; font-family: var(--font-display); font-size: 16px; letter-spacing: .04em }
-body.t-palace .btn.primary { color: #0a1836 }
-body.t-palace .cell { border-radius: 6px; border: 1.5px solid #d9b45b; background: linear-gradient(160deg, #17306b, #0c1c45); box-shadow: inset 0 0 0 4px #0c1c45, inset 0 0 0 5px rgba(217, 180, 91, .55), 0 6px 16px rgba(0, 0, 0, .35) }
-body.t-palace .cell .num { color: #f2d98c; font-weight: 700; font-size: clamp(22px, 6vw, 34px) }
-body.t-palace .cell.open { background: linear-gradient(160deg, #21408a, #102656) }
-body.t-palace .cell.open .num { font-size: clamp(12px, 3.2vw, 16px) }
-body.t-palace .overlay { background: rgba(2, 6, 20, .7) }
-body.t-palace .mcard { border-radius: 8px; border: 1.5px solid #d9b45b; background: linear-gradient(160deg, #17306b, #0a1836); box-shadow: inset 0 0 0 6px #0a1836, inset 0 0 0 7px rgba(217, 180, 91, .6), 0 20px 50px rgba(0, 0, 0, .6) }
-body.t-palace .mcard::before, body.t-palace .mcard::after { content: ""; position: absolute; top: 0; bottom: 0; width: 50%; z-index: 2; background: linear-gradient(160deg, #c79a38, #f2d98c 40%, #9b7421) }
-body.t-palace .mcard::before { left: 0; animation: doorL 1s .15s cubic-bezier(.7, 0, .2, 1) forwards; border-right: 2px solid #7a5a16 }
-body.t-palace .mcard::after { right: 0; animation: doorR 1s .15s cubic-bezier(.7, 0, .2, 1) forwards; border-left: 2px solid #7a5a16 }
-@keyframes doorL { to { transform: translateX(-101%) } }
-@keyframes doorR { to { transform: translateX(101%) } }
-body.t-palace .mcard .content { animation-delay: .7s }
+body.t-palace .hero-svg { max-width: none; border-radius: 10px; animation: palace-aura 4s ease-in-out infinite }
+@keyframes palace-aura { 0%, 100% { box-shadow: 0 16px 40px rgba(0, 0, 0, .5), 0 0 24px rgba(242, 217, 140, .18) } 50% { box-shadow: 0 16px 40px rgba(0, 0, 0, .5), 0 0 48px rgba(242, 217, 140, .4) } }
+body.t-palace .hero h1 {
+  margin-top: 16px; font-style: italic; font-weight: 700; letter-spacing: .01em;
+  background: linear-gradient(100deg, #9b7421 0%, #f2d98c 30%, #fff8dc 45%, #f2d98c 60%, #9b7421 100%) 0 0 / 250% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 14px rgba(242, 217, 140, .45)); animation: palace-gilt 6s linear infinite;
+}
+@keyframes palace-gilt { to { background-position: -250% 0 } }
+body.t-palace .hero p { font-style: italic; font-size: 18px; letter-spacing: .02em }
+body.t-palace .hero p::before { content: ''; display: block; height: 15px; width: min(260px, 70%); margin: 4px auto 8px; background: var(--frieze) center / auto 100% repeat-x }
+body.t-palace .btn { border-radius: 4px; border-width: 1.5px; font-family: var(--font-display); font-style: italic; font-size: 16px }
+body.t-palace .btn.primary { color: #0a1836; background: var(--gilt); box-shadow: 0 0 18px rgba(242, 217, 140, .35) }
+
+body.t-palace .frame { padding: 26px 14px }
+body.t-palace .frame::before, body.t-palace .frame::after {
+  content: ''; position: absolute; left: 90px; right: 90px; height: 14px;
+  background: var(--frieze) left center / auto 100% repeat-x; filter: drop-shadow(0 0 4px rgba(242, 217, 140, .5));
+}
+body.t-palace .frame::before { top: 4px }
+body.t-palace .frame::after { bottom: 4px; transform: scaleY(-1) }
+body.t-palace .corner { width: 92px; height: 92px; filter: drop-shadow(0 0 6px rgba(242, 217, 140, .45)) }
+body.t-palace .glint { transform-box: fill-box; transform-origin: center; animation: palace-glint 3.4s ease-in-out infinite }
+@keyframes palace-glint { 0%, 70%, 100% { opacity: 0; transform: scale(.3) } 80% { opacity: 1; transform: scale(1) rotate(45deg) } }
+
+body.t-palace .ray { animation: palace-ray 5s ease-in-out infinite alternate }
+body.t-palace .ray:nth-child(2n) { animation-delay: -2.5s }
+@keyframes palace-ray { from { opacity: .45 } to { opacity: 1 } }
+body.t-palace .flame { transform-box: fill-box; transform-origin: 50% 100%; animation: palace-flame .5s ease-in-out infinite alternate }
+@keyframes palace-flame { to { transform: scaleY(1.25) scaleX(.85) } }
+body.t-palace .halo { animation: palace-halo 2.6s ease-in-out infinite }
+@keyframes palace-halo { 50% { opacity: .55 } }
+body.t-palace .crystal { animation: palace-halo 1.8s ease-in-out infinite }
+body.t-palace .crystal:nth-child(odd) { animation-delay: -.9s }
+body.t-palace .curtain { transform-box: fill-box; animation: palace-sway 7s ease-in-out infinite alternate }
+body.t-palace .curtain.l { transform-origin: 0 0 }
+body.t-palace .curtain.r { transform-origin: 100% 0; animation-delay: -3.5s }
+@keyframes palace-sway { to { transform: skewX(2deg) scaleX(1.03) } }
+body.t-palace .gilt { filter: drop-shadow(0 0 3px rgba(242, 217, 140, .55)) }
+body.t-palace .shine { animation: palace-shine 7s ease-in-out infinite 1s }
+@keyframes palace-shine { 0% { transform: translateX(-120px) } 40%, 100% { transform: translateX(440px) } }
+
+body.t-palace .cell {
+  overflow: visible; perspective: 700px; border-radius: 6px;
+  border: 1.5px solid #d9b45b; background: radial-gradient(circle at 50% 45%, rgba(242, 217, 140, .32), #0c1c45 72%);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .4), 0 0 10px rgba(242, 217, 140, .2);
+}
+body.t-palace .cell .num { color: #f2d98c; font-style: italic; font-weight: 700 }
+body.t-palace .cell.open .ico svg { filter: drop-shadow(0 0 8px rgba(242, 217, 140, .85)) }
+body.t-palace .leaf { position: absolute; inset: 0; display: grid; place-items: center; z-index: 1; transform-style: preserve-3d }
+body.t-palace .leaf::before, body.t-palace .leaf::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 50%; backface-visibility: hidden;
+  background:
+    linear-gradient(#d9b45b, #d9b45b) 50% 14% / 56% 1px no-repeat,
+    linear-gradient(#d9b45b, #d9b45b) 50% 86% / 56% 1px no-repeat,
+    var(--frieze) 50% 93% / 86% auto no-repeat,
+    var(--lacquer);
+  box-shadow: inset 0 0 0 3px #0a1836, inset 0 0 0 4px rgba(217, 180, 91, .75);
+  transition: transform .2s;
+}
+body.t-palace .leaf::before { left: 0; border-radius: 5px 0 0 5px; transform-origin: left center; border-right: 1px solid #9b7421 }
+body.t-palace .leaf::after { right: 0; border-radius: 0 5px 5px 0; transform-origin: right center }
+body.t-palace .leaf-num {
+  position: relative; z-index: 1; display: grid; place-items: center; width: 54%; aspect-ratio: 1; border-radius: 50%;
+  font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: clamp(16px, 4.6vw, 26px); color: #0a1836;
+  background: radial-gradient(circle at 35% 30%, #fff8dc, #f2d98c 40%, #c79a38 75%, #8a6518);
+  box-shadow: 0 0 0 2px #0a1836, 0 0 0 3.5px #f3ead2, 0 0 0 5px #9b7421, 0 0 14px rgba(242, 217, 140, .55);
+}
+body.t-palace .cell.open .leaf { visibility: hidden }
+body.t-palace .cell.open .leaf::before { transform: rotateY(-110deg) }
+body.t-palace .cell.open .leaf::after { transform: rotateY(110deg) }
+body.t-palace .cell.opening .leaf { visibility: visible }
+body.t-palace .cell.opening .leaf::before { animation: palace-left .95s cubic-bezier(.3, .7, .2, 1) both }
+body.t-palace .cell.opening .leaf::after { animation: palace-right .95s cubic-bezier(.3, .7, .2, 1) both }
+body.t-palace .cell.opening .leaf-num { animation: palace-rise .5s ease-in both }
+@keyframes palace-left { to { transform: rotateY(-110deg) } }
+@keyframes palace-right { to { transform: rotateY(110deg) } }
+@keyframes palace-rise { to { opacity: 0; transform: translateY(-14px) scale(1.3) } }
+
+body.t-palace .cell:not(.locked):not(.open)::after {
+  content: ''; position: absolute; inset: 0; z-index: 2; border-radius: 6px; pointer-events: none;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 248, 220, .35) 50%, transparent 65%) -200% 0 / 250% 100% no-repeat;
+  animation: palace-sweep 5s ease-in-out infinite;
+}
+body.t-palace .cell:nth-child(3n)::after { animation-delay: -1.7s }
+body.t-palace .cell:nth-child(3n + 1)::after { animation-delay: -3.3s }
+@keyframes palace-sweep { 0%, 55% { background-position: -200% 0 } 100% { background-position: 200% 0 } }
+body.t-palace .cell.locked { opacity: 1; filter: saturate(.7) brightness(.78) }
+body.t-palace .cell.today { animation: palace-throb 2.2s ease-in-out infinite }
+@keyframes palace-throb { 0%, 100% { box-shadow: 0 0 0 2px #f2d98c, 0 0 16px rgba(242, 217, 140, .5) } 50% { box-shadow: 0 0 0 2px #fff3c4, 0 0 36px rgba(242, 217, 140, .95) } }
+body.t-palace .cell.today .leaf-num::before {
+  content: ''; position: absolute; top: -48%; left: 50%; width: 70%; height: 42%; margin-left: -35%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 20'%3E%3Cpath d='M2 18L4 4l7 7 7-10 7 10 7-7 2 14z' fill='%23f2d98c' stroke='%236b4c10' stroke-width='1'/%3E%3Ccircle cx='18' cy='3' r='2' fill='%23fff8dc'/%3E%3C/svg%3E") center / contain no-repeat;
+  filter: drop-shadow(0 0 4px rgba(242, 217, 140, .9)); animation: palace-bob 1.6s ease-in-out infinite alternate;
+}
+@keyframes palace-bob { to { transform: translateY(-3px) } }
+
+body.t-palace .overlay { background: rgba(2, 6, 20, .72) }
+body.t-palace .mcard {
+  border-radius: 8px; border: 1.5px solid #d9b45b; background: var(--damask) 0 0 / 60px 60px, linear-gradient(160deg, #17306b, #0a1836);
+  box-shadow: inset 0 0 0 6px #0a1836, inset 0 0 0 7px rgba(217, 180, 91, .6), 0 20px 50px rgba(0, 0, 0, .6), 0 0 40px rgba(242, 217, 140, .25);
+  animation: palace-unveil .6s cubic-bezier(.2, .8, .2, 1);
+}
+@keyframes palace-unveil { from { transform: scale(.9); opacity: 0; filter: brightness(2) } to { transform: none; opacity: 1; filter: none } }
+body.t-palace .mcard .big { animation: palace-halo-big 2.4s ease-in-out infinite }
+@keyframes palace-halo-big { 0%, 100% { filter: drop-shadow(0 0 6px rgba(242, 217, 140, .6)) } 50% { filter: drop-shadow(0 0 18px rgba(255, 243, 196, .95)) } }
 body.t-palace .panel { border: 1px solid rgba(217, 180, 91, .5); border-radius: 6px }
 .tcard.t-palace .sw { background: linear-gradient(135deg, #17306b, #050d24) }
+
+@media (max-width: 520px) {
+  body.t-palace .corner { width: 64px; height: 64px }
+  body.t-palace .frame::before, body.t-palace .frame::after { left: 64px; right: 64px }
+}
