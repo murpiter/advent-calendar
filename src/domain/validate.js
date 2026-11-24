@@ -11,7 +11,7 @@ export const isLine = (value, max) => isText(value, max) && !value.includes('\n'
 export const isObject = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
 
 export const isTaskList = (items, days) => Array.isArray(items) && items.length === days
-  && items.every((item) => isLine(item, LIMITS.item) && item.trim() !== '');
+  && items.every((item) => isLine(item, LIMITS.item) && clean(item).trim() !== '');
 
 export const isCalendar = (data) => THEME_PATTERN.test(data.theme)
   && isLine(data.title, LIMITS.title)
