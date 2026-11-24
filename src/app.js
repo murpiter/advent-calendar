@@ -17,7 +17,7 @@ import { renderEnvelope } from './ui/envelope.js';
 import { openGiftDialog } from './ui/gift-dialog.js';
 import { openIcsDialog } from './ui/ics-dialog.js';
 import { setupInstall } from './ui/install.js';
-import { renderGrid, shake } from './ui/grid.js';
+import { renderGrid, shake, swingOpen } from './ui/grid.js';
 import { renderHero } from './ui/hero.js';
 import { fillForm, parseItems, renderCount, renderSetupForm, renderThemes, selectedDays, validateItems } from './ui/setup.js';
 import { createSnow } from './ui/snow.js';
@@ -102,7 +102,7 @@ function switchLanguage() {
   renderCount(strings);
 }
 
-function onDoorClick(event) {
+async function onDoorClick(event) {
   const cell = event.target.closest('.cell');
   if (!cell) return;
   const day = Number(cell.dataset.day);
@@ -118,6 +118,7 @@ function onDoorClick(event) {
     renderCalendar();
   }
   const returnFocus = $('grid').querySelector(`[data-day="${day}"]`);
+  if (door === 'ready') await swingOpen(returnFocus, theme().openDelay);
   openDoor({ day, text: state.assign[day - 1], theme: theme(), strings, fresh: door === 'ready', returnFocus });
 }
 
