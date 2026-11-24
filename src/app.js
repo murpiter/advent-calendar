@@ -1,8 +1,10 @@
 import { appUrl } from './config.js';
-import { currentDay, doorState, shuffle } from './domain/calendar.js';
+import { adventYear, currentDay, doorState, shuffle } from './domain/calendar.js';
 import { decodeGift, encodeGift } from './domain/gift.js';
-import { parsePreset } from './domain/preset.js';
-import { buildSavedPage, capturePage, download, newCalendarId, takePreset } from './export/save-file.js';
+import { calendarFile } from './domain/ics.js';
+import { fileName, parsePreset } from './domain/preset.js';
+import { download } from './export/download.js';
+import { buildSavedPage, capturePage, newCalendarId, takePreset } from './export/save-file.js';
 import { LANGUAGES, detectLanguage, otherLanguage } from './i18n/index.js';
 import { exampleCalendar, exampleItems, isExample, loadState, persist, presetOf, translateExample } from './state.js';
 import { load, useNamespace } from './storage/store.js';
@@ -11,6 +13,7 @@ import { $ } from './ui/dom.js';
 import { openDoor } from './ui/door.js';
 import { renderEnvelope } from './ui/envelope.js';
 import { openGiftDialog } from './ui/gift-dialog.js';
+import { openIcsDialog } from './ui/ics-dialog.js';
 import { renderGrid, shake } from './ui/grid.js';
 import { renderHero } from './ui/hero.js';
 import { fillForm, parseItems, renderCount, renderSetupForm, renderThemes, selectedDays, validateItems } from './ui/setup.js';
@@ -29,6 +32,7 @@ const snow = createSnow($('snow'));
 
 const today = () => (state.demo ? state.demoDay : currentDay(new Date(), state.days));
 const theme = () => themeById(state.theme);
+const calendarName = () => state.title || strings.themes[state.theme].title;
 const doors = () => ({ today: today(), opened: state.opened, unlocked: state.unlocked });
 
 function heroLines() {
@@ -44,7 +48,7 @@ function paintTheme(look, title, lines) {
 }
 
 function applyTheme() {
-  paintTheme(theme(), state.title || strings.themes[state.theme].title, heroLines());
+  paintTheme(theme(), calendarName(), heroLines());
 }
 
 function renderCalendar() {
@@ -62,7 +66,7 @@ function renderAll() {
 
 function renderStaticText() {
   const labels = {
-    toSetup: strings.setup, reshuffle: strings.reshuffle, saveBtn: strings.saveFile, exitDemo: strings.exitDemo, ownCalendar: strings.ownCalendar,
+    toSetup: strings.setup, reshuffle: strings.reshuffle, saveBtn: strings.saveFile, icsBtn: strings.icsButton, exitDemo: strings.exitDemo, ownCalendar: strings.ownCalendar,
     styleHeading: strings.styleHeading, itemsHeading: strings.itemsHeading, titleLabel: strings.titleLabel,
     daysLabel: strings.daysLabel, itemsLabel: strings.itemsLabel, build: strings.build, giftBtn: strings.gift,
     example: strings.example, back: strings.back, doorsHeading: strings.doorsHeading,
@@ -163,8 +167,25 @@ function onGive() {
 
 async function onSave() {
   const html = await buildSavedPage({ pageHtml, preset: presetOf(state, newCalendarId()), families: theme().fonts });
-  download(html, state.title || strings.themes[state.theme].title);
+  download(html, fileName(calendarName()), 'text/html');
   toast(strings.saved);
+}
+
+function calendarEvents(showTasks) {
+  const link = state.gift ? `${appUrl()}#gift=${state.gift.token}` : appUrl();
+  return state.assign.map((task, index) => ({
+    day: index + 1,
+    summary: showTasks ? strings.icsTask(index + 1, task) : strings.icsEvent(index + 1),
+    description: link,
+  }));
+}
+
+function downloadIcs(showTasks) {
+  const now = new Date();
+  const name = calendarName();
+  const text = calendarFile({ name, year: adventYear(now), events: calendarEvents(showTasks), uid: newCalendarId(), stamp: now });
+  download(text, fileName(name, '.ics'), 'text/calendar');
+  toast(strings.icsSaved);
 }
 
 function onReshuffle() {
@@ -250,6 +271,7 @@ function bindEvents() {
   });
   $('reshuffle').addEventListener('click', onReshuffle);
   $('saveBtn').addEventListener('click', onSave);
+  $('icsBtn').addEventListener('click', () => openIcsDialog({ strings, onDownload: downloadIcs, returnFocus: $('icsBtn') }));
   $('ownCalendar').addEventListener('click', onOwnCalendar);
   $('langBtn').addEventListener('click', switchLanguage);
   $('themes').addEventListener('click', onThemePick);
