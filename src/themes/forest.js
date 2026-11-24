@@ -54,6 +54,7 @@ const SNOWBALL = svg('0 0 40 40', '<circle cx="20" cy="20" r="7" fill="#e7f0ea"/
 
 export default {
   id: 'forest',
+  fonts: ['Oswald', 'Barlow'],
   icon: (day) => ICONS[day % ICONS.length],
   swatch: ICONS[0],
   hero,

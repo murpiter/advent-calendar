@@ -36,6 +36,7 @@ function paintFlake(ctx, f, t) {
 
 export default {
   id: 'palace',
+  fonts: ['Cormorant Garamond', 'Playfair Display'],
   icon: (day) => ICONS[day % ICONS.length],
   swatch: ICONS[0],
   hero,
