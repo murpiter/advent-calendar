@@ -1,3 +1,4 @@
+import { isGiftToken } from './gift.js';
 import { LIMITS, clean, isCalendar, isLine, isObject } from './validate.js';
 
 const ID_PATTERN = /^[a-f0-9]{16}$/;
@@ -7,7 +8,7 @@ const HTML_SENSITIVE = { '<': '\\u003c', '>': '\\u003e', '&': '\\u0026', '\u2028
 const sameTasks = (a, b) => JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
 
 const isGiftMark = (gift) => gift === null
-  || (isObject(gift) && isLine(gift.from, LIMITS.from) && typeof gift.token === 'string' && gift.token.length <= 8000);
+  || (isObject(gift) && isLine(gift.from, LIMITS.from) && isGiftToken(gift.token));
 
 const isPreset = (data) => isObject(data)
   && ID_PATTERN.test(data.id)

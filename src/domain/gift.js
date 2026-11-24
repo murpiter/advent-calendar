@@ -5,6 +5,9 @@ const MAX_TOKEN_LENGTH = 8000;
 const MAX_UNPACKED_BYTES = 64 * 1024;
 const TOKEN_PATTERN = /^[A-Za-z0-9_-]+$/;
 
+export const isGiftToken = (token) => typeof token === 'string' && token.length <= MAX_TOKEN_LENGTH
+  && token.startsWith(VERSION) && TOKEN_PATTERN.test(token.slice(1));
+
 function toBase64Url(bytes) {
   let binary = '';
   for (const byte of bytes) binary += String.fromCharCode(byte);
@@ -49,8 +52,7 @@ export async function encodeGift(gift) {
 }
 
 export async function decodeGift(token) {
-  if (typeof token !== 'string' || token.length > MAX_TOKEN_LENGTH) return null;
-  if (!token.startsWith(VERSION) || !TOKEN_PATTERN.test(token.slice(1))) return null;
+  if (!isGiftToken(token)) return null;
   try {
     const gift = JSON.parse(await unpack(fromBase64Url(token.slice(1))));
     return isValidGift(gift) ? normalize(gift) : null;
