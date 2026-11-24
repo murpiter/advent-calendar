@@ -1,0 +1,20 @@
+body.t-forest {
+  --bg: #10272b; --bg2: #091719; --ink: #e7f0ea; --muted: #8fa9a0; --accent: #ffb347; --accent2: #6fd6b0; --card: #16363a;
+  --glow: rgba(255, 179, 71, .5); --danger: #ff8a8a;
+  --font-display: 'Oswald', system-ui, sans-serif; --font-body: 'Barlow', system-ui, sans-serif;
+  color-scheme: dark;
+}
+body.t-forest .hero h1 { text-transform: uppercase; letter-spacing: .08em; font-weight: 500 }
+body.t-forest .btn { border-radius: 2px; text-transform: uppercase; letter-spacing: .06em; font-size: 13px }
+body.t-forest .btn.primary { color: #10272b }
+body.t-forest .cell { border: 2px solid rgba(231, 240, 234, .2); background: rgba(255, 255, 255, .05); clip-path: polygon(0 12px, 12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%) }
+body.t-forest .cell .num { color: #e7f0ea; font-weight: 500 }
+body.t-forest .cell.open { background: rgba(111, 214, 176, .12); border-color: rgba(111, 214, 176, .55) }
+body.t-forest .cell.today { border-color: #ffb347 }
+body.t-forest .overlay { background: rgba(3, 10, 12, .7) }
+body.t-forest .mcard { border: 2px solid #ffb347; background: linear-gradient(180deg, #16363a, #0d2124); clip-path: polygon(0 18px, 18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%); animation: lift .55s cubic-bezier(.2, .8, .2, 1) }
+@keyframes lift { from { transform: translateY(60px); opacity: 0 } to { transform: none; opacity: 1 } }
+body.t-forest .mcard .big { animation: flicker 2.4s infinite }
+@keyframes flicker { 0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 179, 71, .6)) } 45% { filter: drop-shadow(0 0 14px rgba(255, 179, 71, .9)) } 60% { filter: drop-shadow(0 0 4px rgba(255, 179, 71, .4)) } }
+body.t-forest .panel { border: 1px solid rgba(231, 240, 234, .18); border-radius: 4px }
+.tcard.t-forest .sw { background: linear-gradient(135deg, #16424a, #091719) }

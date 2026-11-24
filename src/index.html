@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="%CSP%">
+<meta name="referrer" content="no-referrer">
+<title>Адвент-календарь</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;600;700&family=Cormorant+Garamond:wght@500;600;700&family=Playfair+Display:wght@500;700&family=Oswald:wght@400;500;600&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>%CSS%</style>
+</head>
+<body class="t-kawaii">
+<canvas id="snow" aria-hidden="true"></canvas>
+<svg width="0" height="0" class="defs" aria-hidden="true">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fbeaa8"/><stop offset=".5" stop-color="#d9b45b"/><stop offset="1" stop-color="#9b7421"/>
+    </linearGradient>
+    <linearGradient id="aurora" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6fd6b0" stop-opacity="0"/><stop offset=".4" stop-color="#6fd6b0" stop-opacity=".8"/>
+      <stop offset=".75" stop-color="#7aa8ff" stop-opacity=".6"/><stop offset="1" stop-color="#b58cff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<main class="app">
+  <header class="hero" id="hero"></header>
+
+  <section id="viewCal">
+    <div class="bar">
+      <div class="day-label" id="dayLabel"></div>
+      <button class="btn small" id="dayMinus" type="button">−</button>
+      <button class="btn small" id="dayPlus" type="button">+</button>
+      <button class="btn small" id="modeBtn" type="button"></button>
+      <button class="btn" id="toSetup" type="button"></button>
+      <button class="btn" id="reshuffle" type="button"></button>
+    </div>
+    <div class="frame" id="frame">
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section id="viewSetup" hidden>
+    <div class="panel">
+      <h2 id="styleHeading"></h2>
+      <div class="themes" id="themes"></div>
+    </div>
+    <div class="panel">
+      <h2 id="itemsHeading"></h2>
+      <label class="field"><span id="titleLabel"></span><input type="text" id="titleIn" maxlength="48"></label>
+      <label class="field"><span id="itemsLabel"></span><textarea id="itemsIn" spellcheck="false"></textarea></label>
+      <div class="count" id="count"></div>
+      <div class="err" id="err" role="alert"></div>
+      <div class="actions">
+        <button class="btn primary" id="build" type="button"></button>
+        <button class="btn" id="example" type="button"></button>
+        <button class="btn" id="back" type="button"></button>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status"></div>
+<div id="modalRoot"></div>
+<script>%JS%</script>
+</body>
+</html>

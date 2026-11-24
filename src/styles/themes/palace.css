@@ -1,0 +1,23 @@
+body.t-palace {
+  --bg: #0a1836; --bg2: #050d24; --ink: #f3e7c6; --muted: #b9a878; --accent: #d9b45b; --accent2: #f2d98c; --card: #0f2250;
+  --glow: rgba(242, 217, 140, .55); --danger: #ff8a8a;
+  --font-display: 'Cormorant Garamond', 'Playfair Display', Georgia, serif; --font-body: 'Playfair Display', Georgia, serif;
+  color-scheme: dark;
+}
+body.t-palace .hero h1 { letter-spacing: .04em; font-weight: 700; background: linear-gradient(180deg, #fbeaa8, #c79a38); -webkit-background-clip: text; background-clip: text; color: transparent }
+body.t-palace .btn { border-radius: 4px; border-width: 1.5px; font-family: var(--font-display); font-size: 16px; letter-spacing: .04em }
+body.t-palace .btn.primary { color: #0a1836 }
+body.t-palace .cell { border-radius: 6px; border: 1.5px solid #d9b45b; background: linear-gradient(160deg, #17306b, #0c1c45); box-shadow: inset 0 0 0 4px #0c1c45, inset 0 0 0 5px rgba(217, 180, 91, .55), 0 6px 16px rgba(0, 0, 0, .35) }
+body.t-palace .cell .num { color: #f2d98c; font-weight: 700; font-size: clamp(22px, 6vw, 34px) }
+body.t-palace .cell.open { background: linear-gradient(160deg, #21408a, #102656) }
+body.t-palace .cell.open .num { font-size: clamp(12px, 3.2vw, 16px) }
+body.t-palace .overlay { background: rgba(2, 6, 20, .7) }
+body.t-palace .mcard { border-radius: 8px; border: 1.5px solid #d9b45b; background: linear-gradient(160deg, #17306b, #0a1836); box-shadow: inset 0 0 0 6px #0a1836, inset 0 0 0 7px rgba(217, 180, 91, .6), 0 20px 50px rgba(0, 0, 0, .6) }
+body.t-palace .mcard::before, body.t-palace .mcard::after { content: ""; position: absolute; top: 0; bottom: 0; width: 50%; z-index: 2; background: linear-gradient(160deg, #c79a38, #f2d98c 40%, #9b7421) }
+body.t-palace .mcard::before { left: 0; animation: doorL 1s .15s cubic-bezier(.7, 0, .2, 1) forwards; border-right: 2px solid #7a5a16 }
+body.t-palace .mcard::after { right: 0; animation: doorR 1s .15s cubic-bezier(.7, 0, .2, 1) forwards; border-left: 2px solid #7a5a16 }
+@keyframes doorL { to { transform: translateX(-101%) } }
+@keyframes doorR { to { transform: translateX(101%) } }
+body.t-palace .mcard .content { animation-delay: .7s }
+body.t-palace .panel { border: 1px solid rgba(217, 180, 91, .5); border-radius: 6px }
+.tcard.t-palace .sw { background: linear-gradient(135deg, #17306b, #050d24) }
