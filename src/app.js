@@ -83,7 +83,7 @@ function renderStaticText() {
   $('dayMinus').setAttribute('aria-label', strings.prevDay);
   $('dayPlus').setAttribute('aria-label', strings.nextDay);
   $('langBtn').textContent = strings.switchTo.code;
-  $('langBtn').setAttribute('aria-label', strings.switchTo.label);
+  $('langBtn').setAttribute('aria-label', `${strings.switchTo.code}, ${strings.switchTo.label}`);
   document.documentElement.lang = strings.lang;
   document.title = strings.pageTitle;
   $('description').setAttribute('content', strings.description);
