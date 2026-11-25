@@ -60,6 +60,8 @@ export default {
   qrHint: 'Можно распечатать QR-код на открытке',
   qrTooLong: 'Список слишком длинный для QR-кода, отправьте ссылку',
   close: 'Закрыть',
+  updateReady: 'Есть новая версия',
+  updateReload: 'Обновить',
   envelopeHeading: 'Вам календарь в подарок',
   envelopeFrom: (name) => `от ${name}`,
   openGift: 'Открыть подарок',

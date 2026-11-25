@@ -22,6 +22,7 @@ import { renderHero } from './ui/hero.js';
 import { fillForm, parseItems, renderCount, renderSetupForm, renderThemes, selectedDays, validateItems } from './ui/setup.js';
 import { createSnow } from './ui/snow.js';
 import { toast } from './ui/toast.js';
+import { showUpdateBar } from './ui/update-bar.js';
 
 const presetText = takePreset();
 const pageHtml = capturePage();
@@ -300,6 +301,6 @@ bindEvents();
 persist(state);
 receiveGift();
 if (!preset) {
-  enableOffline();
+  enableOffline((apply) => showUpdateBar(strings, apply));
   setupInstall($('installBtn'), () => strings);
 }

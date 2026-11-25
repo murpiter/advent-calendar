@@ -15,11 +15,15 @@ async function dropOldCaches() {
 }
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(__FILES__.map(fresh))).then(() => self.skipWaiting()));
+  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(__FILES__.map(fresh))));
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(dropOldCaches().then(() => self.clients.claim()));
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data === 'skip-waiting') self.skipWaiting();
 });
 
 self.addEventListener('fetch', (event) => {

@@ -57,6 +57,8 @@ export default {
   qrHint: 'You can print the QR code on a card',
   qrTooLong: 'The list is too long for a QR code, send the link instead',
   close: 'Close',
+  updateReady: 'A new version is ready',
+  updateReload: 'Refresh',
   envelopeHeading: 'A calendar for you',
   envelopeFrom: (name) => `from ${name}`,
   openGift: 'Open the gift',
