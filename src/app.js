@@ -301,6 +301,7 @@ renderSetupForm(state, strings);
 bindEvents();
 persist(state);
 receiveGift();
+document.querySelector('.app').classList.add('ready');
 if (!preset) {
   enableOffline((apply) => showUpdateBar(strings, apply));
   setupInstall($('installBtn'), () => strings);
