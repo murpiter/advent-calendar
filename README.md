@@ -59,6 +59,9 @@ npm run build
 The build writes `dist/`: one `index.html` with inlined JS and CSS, plus fonts, icons, manifests and
 the service worker. Serve that folder with any static server.
 
+App icons are drawn in `art/icons/*.svg`; `npm run icons` renders them to PNG with resvg,
+on any OS, no browser needed.
+
 Every push to `main` runs the tests and publishes `dist/` to GitHub Pages.
 
 ## How it is built
