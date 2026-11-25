@@ -6,6 +6,7 @@ const SWEET_DAYS = { one: 'сладкий день', few: 'сладких дня
 export default {
   lang: 'ru',
   pageTitle: 'Адвент-календарь',
+  description: 'Превратите любой список в адвент-календарь: одна дверца в день. Без регистрации, работает офлайн.',
   switchTo: { code: 'EN', label: 'English' },
   dayOfMonth: (day) => `${day} декабря`,
   subtitle: (days) => `${plural(days, DOORS)} · с 1 по ${days} декабря`,

@@ -86,6 +86,7 @@ function renderStaticText() {
   $('langBtn').setAttribute('aria-label', strings.switchTo.label);
   document.documentElement.lang = strings.lang;
   document.title = strings.pageTitle;
+  $('description').setAttribute('content', strings.description);
 }
 
 function show(view) {

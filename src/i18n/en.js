@@ -3,6 +3,7 @@ const doors = (n) => `${n} ${n === 1 ? 'door' : 'doors'}`;
 export default {
   lang: 'en',
   pageTitle: 'Advent calendar',
+  description: 'Turn any list into an advent calendar: one door a day. No sign-up, works offline.',
   switchTo: { code: 'RU', label: 'Русский' },
   dayOfMonth: (day) => `December ${day}`,
   subtitle: (days) => `${doors(days)} · December 1–${days}`,
