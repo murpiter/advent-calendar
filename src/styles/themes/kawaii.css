@@ -60,7 +60,7 @@ body.t-kawaii .cell:not(.locked):hover { transform: none }
 body.t-kawaii .cell:not(.locked):hover .leaf-pic svg { transform: scale(1.08) rotate(-4deg) }
 body.t-kawaii .leaf-num {
   position: absolute; top: -8px; right: -6px; min-width: 30px; height: 30px; padding: 0 6px; border-radius: 15px; display: grid; place-items: center;
-  background: #fff; color: var(--d); font-family: var(--font-body); font-weight: 900; font-size: 16px; box-shadow: 0 3px 0 color-mix(in srgb, var(--d) 45%, #fff);
+  background: #fff; color: color-mix(in srgb, var(--d) 40%, #5b3a6b); font-family: var(--font-body); font-weight: 900; font-size: 16px; box-shadow: 0 3px 0 color-mix(in srgb, var(--d) 45%, #fff);
 }
 body.t-kawaii .cell.open .leaf { visibility: hidden }
 body.t-kawaii .cell.opening .leaf { visibility: visible; animation: kawaii-lid .8s ease-in-out forwards }
