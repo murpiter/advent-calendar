@@ -63,8 +63,8 @@ Every push to `main` runs the tests and publishes `dist/` to GitHub Pages.
 
 ## How it is built
 
-Vanilla JavaScript modules, no framework. Two dependencies: `esbuild` for the build and
-`qrcode-generator` for the QR code.
+Vanilla JavaScript modules, no framework. One runtime dependency, `qrcode-generator` for the QR code.
+The build uses `esbuild` and takes the fonts from Fontsource packages.
 
 ```
 src/
@@ -85,4 +85,5 @@ means one JS module and one stylesheet.
 
 Public domain ([Unlicense](LICENSE)): anyone can do anything with the code, the art and the texts.
 
-Fonts are bundled under the SIL Open Font License; the texts are in `public/fonts/licenses/`.
+Fonts come from [Fontsource](https://fontsource.org) packages under the SIL Open Font License;
+the build copies them and their license texts into `dist/fonts/`.

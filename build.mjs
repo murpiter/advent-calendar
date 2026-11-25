@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import * as esbuild from 'esbuild';
+import { copyFonts } from './scripts/fonts.mjs';
 import { LANGUAGES } from './src/i18n/index.js';
 import { DEFAULT_THEME, THEMES } from './src/themes/index.js';
 
@@ -94,11 +95,15 @@ function assertInlineSafe(name, text) {
   if (/<\/(script|style)/i.test(text)) throw new Error(`${name} contains a closing tag`);
 }
 
-const [template, js, styles, fonts] = await Promise.all([
+await rm(OUT_DIR, { recursive: true, force: true });
+await mkdir(OUT_DIR);
+await cp('public', OUT_DIR, { recursive: true });
+const fonts = await copyFonts(`${OUT_DIR}/fonts`);
+
+const [template, js, styles] = await Promise.all([
   readFile('src/index.html', 'utf8'),
-  bundle('src/app.js'),
+  bundle('src/app.js', { __FONTS__: JSON.stringify(fonts) }),
   bundle('src/styles/index.css'),
-  readFile('src/fonts.json', 'utf8').then(JSON.parse),
 ]);
 const css = fontFaces(fonts) + styles;
 assertInlineSafe('script', js);
@@ -111,9 +116,6 @@ const html = template
   .replaceAll('%THEME%', DEFAULT_THEME)
   .replace('%COLOR%', THEMES[DEFAULT_THEME].color);
 
-await rm(OUT_DIR, { recursive: true, force: true });
-await mkdir(OUT_DIR);
-await cp('public', OUT_DIR, { recursive: true });
 await writeFile(`${OUT_DIR}/index.html`, html);
 await writeManifests();
 await writeServiceWorker();

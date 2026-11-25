@@ -1,5 +1,4 @@
 import { serializePreset } from '../domain/preset.js';
-import fonts from '../fonts.json';
 
 const PRESET_ID = 'preset';
 const FONTS_ID = 'embedded-fonts';
@@ -33,7 +32,7 @@ async function embeddedFace({ family, weight, unicodeRange, file }) {
 
 async function fontCss(families, page) {
   try {
-    const faces = await Promise.all(fonts.filter((face) => families.includes(face.family)).map(embeddedFace));
+    const faces = await Promise.all(__FONTS__.filter((face) => families.includes(face.family)).map(embeddedFace));
     return faces.join('');
   } catch {
     return page.getElementById(FONTS_ID)?.textContent ?? '';
