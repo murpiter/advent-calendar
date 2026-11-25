@@ -98,6 +98,7 @@ function assertInlineSafe(name, text) {
 await rm(OUT_DIR, { recursive: true, force: true });
 await mkdir(OUT_DIR);
 await cp('public', OUT_DIR, { recursive: true });
+await cp('art/icons', `${OUT_DIR}/icons`, { recursive: true });
 const fonts = await copyFonts(`${OUT_DIR}/fonts`);
 
 const [template, js, styles] = await Promise.all([

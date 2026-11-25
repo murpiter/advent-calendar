@@ -2,7 +2,7 @@ import { serializePreset } from '../domain/preset.js';
 
 const PRESET_ID = 'preset';
 const FONTS_ID = 'embedded-fonts';
-const WEB_APP_LINKS = ['manifest', 'touchIcon', 'favicon'];
+const WEB_APP_LINKS = ['manifest', 'touchIcon', 'faviconSvg', 'favicon'];
 
 export function takePreset() {
   const node = document.getElementById(PRESET_ID);
