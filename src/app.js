@@ -141,8 +141,16 @@ function onThemePick(event) {
   if (!card) return;
   state.theme = card.dataset.theme;
   persist(state);
+  const top = card.getBoundingClientRect().top;
   renderAll();
   renderThemes(state.theme, strings);
+  keepInPlace(state.theme, top);
+}
+
+function keepInPlace(theme, top) {
+  const card = [...$('themes').children].find((node) => node.dataset.theme === theme);
+  window.scrollBy(0, card.getBoundingClientRect().top - top);
+  card.focus({ preventScroll: true });
 }
 
 function readForm() {
