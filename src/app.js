@@ -7,7 +7,7 @@ import { download } from './export/download.js';
 import { buildSavedPage, capturePage, newCalendarId, takePreset } from './export/save-file.js';
 import { LANGUAGES, detectLanguage, otherLanguage } from './i18n/index.js';
 import { enableOffline } from './offline.js';
-import { exampleCalendar, exampleItems, isExample, loadState, persist, presetOf, translateExample } from './state.js';
+import { exampleCalendar, exampleItems, isExample, isExampleList, loadState, persist, presetOf, translateExample } from './state.js';
 import { load, useNamespace } from './storage/store.js';
 import { themeById } from './themes/index.js';
 import { setAppLook } from './ui/app-look.js';
@@ -210,6 +210,8 @@ function onFormChange() {
 }
 
 function onExample() {
+  const typed = parseItems($('itemsIn').value);
+  if (!isExampleList(typed, strings) && !window.confirm(strings.confirmExample)) return;
   fillForm({ title: strings.exampleTitle, items: exampleItems(strings, selectedDays()) });
   onFormChange();
 }

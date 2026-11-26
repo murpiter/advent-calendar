@@ -69,6 +69,7 @@ export default {
   giftByline: (name) => `A gift from ${name}`,
   ownCalendar: 'Make my own calendar',
   confirmOwn: 'The gift will disappear from this device. Continue?',
+  confirmExample: 'Replace your list with the example? Your tasks will be lost.',
   themes: {
     kawaii: { name: 'Kawaii', sub: 'Year of the Goat, pastels and snow', title: 'Snowy goat', ok: 'Yay!' },
     palace: { name: 'Palace', sub: 'Royal blue, gold and monograms', title: 'Golden hall', ok: 'With gratitude' },

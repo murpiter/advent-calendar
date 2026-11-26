@@ -22,7 +22,9 @@ export function exampleItems(strings, days) {
   return [...strings.exampleItems.slice(0, days - 1), strings.exampleFinale];
 }
 
-export const isExample = (state, strings) => state.items.every((text) => exampleList(strings).includes(text));
+export const isExampleList = (items, strings) => items.every((text) => exampleList(strings).includes(text));
+
+export const isExample = (state, strings) => isExampleList(state.items, strings);
 
 export function translateExample(state, from, to) {
   if (!isExample(state, from)) return;
