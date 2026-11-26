@@ -89,7 +89,7 @@ button { font: inherit; color: inherit; cursor: pointer }
 .panel { background: color-mix(in srgb, var(--card) 88%, transparent); border-radius: 20px; padding: 18px; margin-top: 14px }
 .panel h2 { font-size: 20px; margin-bottom: 10px }
 .themes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px }
-.tcard { border: 3px solid transparent; border-radius: 16px; padding: 10px 6px 8px; text-align: center; background: var(--bg); color: var(--ink); min-width: 0 }
+.tcard { display: flex; flex-direction: column; justify-content: flex-start; border: 3px solid transparent; border-radius: 16px; padding: 10px 6px 8px; text-align: center; background: var(--bg); color: var(--ink); min-width: 0 }
 .tcard[aria-pressed="true"] { border-color: var(--accent) }
 .tcard .sw { height: 64px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px }
 .tcard .sw svg { width: 46px; height: 46px }
