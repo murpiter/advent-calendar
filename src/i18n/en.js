@@ -81,7 +81,7 @@ export default {
     },
     mezen: { name: 'Mezen painting', sub: 'Horses, birds and suns', title: 'Painted spinning wheel', ok: 'Lovely!' },
   },
-  exampleTitle: 'Cleaning advent calendar',
+  exampleTitle: 'Advent calendar',
   exampleItems: [
     'Dust every shelf', 'Sort out one drawer of odds and ends', 'Clean the bathroom mirror', 'Toss expired food from the fridge',
     'Wipe light switches and door handles', 'Wash the curtains or a throw', 'Sort the make-up shelf', 'Clean the stove and the hood',
