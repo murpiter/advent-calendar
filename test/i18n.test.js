@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import en from '../src/i18n/en.js';
 import ru from '../src/i18n/ru.js';
@@ -21,4 +22,12 @@ test('Gingerbread counts sweet days in both languages', () => {
     '31 сладкий день до праздника',
   ]);
   assert.equal(en.themes.gingerbread?.subtitle?.(25), '25 sweet days until the holidays');
+});
+
+test('The page opens in English before the app picks a language', () => {
+  const head = readFileSync(new URL('../src/index.html', import.meta.url), 'utf8');
+  assert.match(head, /<html lang="en">/);
+  assert.ok(head.includes(`<title>${en.pageTitle}</title>`));
+  assert.ok(head.includes(`content="${en.description}"`));
+  assert.match(head, /manifest-%THEME%-en\.webmanifest/);
 });
