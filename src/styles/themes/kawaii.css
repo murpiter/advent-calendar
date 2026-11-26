@@ -1,5 +1,5 @@
 body.t-kawaii {
-  --font-display: 'Fredoka', 'Nunito', system-ui, sans-serif;
+  --font-display: 'Fredoka', 'Nunito', system-ui, sans-serif; --muted: #7d5c76; --danger: #b83563;
   background: radial-gradient(60% 40% at 15% 10%, #ffe1ef 0, transparent 70%), radial-gradient(50% 40% at 90% 30%, #e6defe 0, transparent 70%),
     linear-gradient(180deg, #fff4fa, #fdf0ff 60%, #f0fbf6) fixed;
 }
@@ -9,8 +9,9 @@ body.t-kawaii .hero h1 {
   text-shadow: 0 3px 0 #fff, 0 6px 0 #ffd1e3, 0 0 30px rgba(255, 156, 194, .6); animation: kawaii-bob 3s ease-in-out infinite;
 }
 @keyframes kawaii-bob { 50% { transform: translateY(-4px) } }
-body.t-kawaii .hero p { font-weight: 700; color: #a684a0 }
+body.t-kawaii .hero p { font-weight: 700; color: var(--muted) }
 body.t-kawaii .btn { border-radius: 999px; font-weight: 800 }
+body.t-kawaii .btn.primary, body.t-kawaii .seg input:checked + span { color: #4f2f48 }
 
 body.t-kawaii .blink { transform-box: fill-box; transform-origin: center; animation: kawaii-blink 4.5s infinite }
 @keyframes kawaii-blink { 0%, 92%, 100% { transform: none } 95% { transform: scaleY(.1) } }
@@ -44,7 +45,8 @@ body.t-kawaii .cell {
 body.t-kawaii .cell:nth-child(4n + 2) { --c: #d8ccff; --d: #a998f5 }
 body.t-kawaii .cell:nth-child(4n + 3) { --c: #bff0df; --d: #6fd0ad }
 body.t-kawaii .cell:nth-child(4n + 4) { --c: #ffdcb8; --d: #f5ac6a }
-body.t-kawaii .cell .num { color: var(--d); font-weight: 900 }
+body.t-kawaii .cell .num { color: color-mix(in srgb, var(--d) 40%, #5b3a6b); font-weight: 900 }
+body.t-kawaii .cell.open .num { opacity: 1 }
 body.t-kawaii .cell .ico { width: 62% }
 body.t-kawaii .cell.open .ico svg { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--d) 70%, transparent)); animation: kawaii-wiggle 2.4s ease-in-out infinite }
 @keyframes kawaii-wiggle { 0%, 100% { transform: rotate(-5deg) } 50% { transform: rotate(5deg) scale(1.06) } }
