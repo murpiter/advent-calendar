@@ -73,7 +73,7 @@ function renderAll() {
 
 function renderStaticText() {
   const labels = {
-    toSetup: strings.setup, reshuffle: strings.reshuffle, saveBtn: strings.saveFile, icsBtn: strings.icsButton, installBtn: strings.install, exitDemo: strings.exitDemo, ownCalendar: strings.ownCalendar,
+    toSetup: strings.setup, moreLabel: strings.more, reshuffle: strings.reshuffle, saveBtn: strings.saveFile, icsBtn: strings.icsButton, installBtn: strings.install, exitDemo: strings.exitDemo, ownCalendar: strings.ownCalendar,
     styleHeading: strings.styleHeading, itemsHeading: strings.itemsHeading, titleLabel: strings.titleLabel,
     daysLabel: strings.daysLabel, itemsLabel: strings.itemsLabel, build: strings.build, giftBtn: strings.gift,
     example: strings.example, back: strings.back, doorsHeading: strings.doorsHeading,
@@ -216,6 +216,13 @@ function onExample() {
   onFormChange();
 }
 
+function closeMore(event) {
+  const more = $('more');
+  const chose = event.target.closest?.('.more-list button');
+  const outside = !more.contains(event.target);
+  if (more.open && (chose || outside || event.key === 'Escape')) more.open = false;
+}
+
 function onUnlockChange() {
   state.unlocked = $('unlockIn').checked;
   persist(state);
@@ -294,6 +301,8 @@ function bindEvents() {
   $('back').addEventListener('click', () => show('cal'));
   $('build').addEventListener('click', onBuild);
   $('giftBtn').addEventListener('click', onGive);
+  document.addEventListener('click', closeMore);
+  document.addEventListener('keydown', closeMore);
   window.addEventListener('hashchange', receiveGift);
 }
 

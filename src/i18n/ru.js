@@ -18,6 +18,7 @@ export default {
   nextDay: 'Следующий день',
   exitDemo: 'Настоящая дата',
   setup: 'Настроить',
+  more: 'Ещё',
   reshuffle: 'Перемешать',
   reshuffled: 'Дела разложены заново',
   built: 'Календарь собран',

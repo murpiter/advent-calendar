@@ -15,6 +15,7 @@ export default {
   nextDay: 'Next day',
   exitDemo: 'Real date',
   setup: 'Set up',
+  more: 'More',
   reshuffle: 'Shuffle',
   reshuffled: 'Tasks shuffled',
   built: 'Calendar ready',
